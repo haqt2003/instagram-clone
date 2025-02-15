@@ -29,9 +29,13 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.buttonClose.setOnClickListener {
-//            dismiss()
-//        }
+        binding.clEdit.setOnClickListener {
+
+        }
+
+        binding.clDelete.setOnClickListener {
+
+        }
     }
 
     companion object {

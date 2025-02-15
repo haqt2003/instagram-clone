@@ -97,6 +97,7 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
     }
 
     override fun onMoreClicked(item: PostData) {
-        TODO("Not yet implemented")
+        val bottomSheetFragment = MoreBottomSheetFragment.newInstance(item._id)
+        bottomSheetFragment.show(requireActivity().supportFragmentManager, bottomSheetFragment.tag)
     }
 }
