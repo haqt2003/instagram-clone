@@ -15,8 +15,8 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     private val _user = MutableLiveData<AuthResponse?>()
     val user: MutableLiveData<AuthResponse?> get() = _user
 
-    private val _isRegisterSuccess = MutableLiveData<Boolean>()
-    val isRegisterSuccess: MutableLiveData<Boolean> get() = _isRegisterSuccess
+    private val _authMsg = MutableLiveData<String?>()
+    val authMsg: MutableLiveData<String?> get() = _authMsg
 
     fun login(username: String, password: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -24,8 +24,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                 authRepository.login(LoginRequest(username, password))
             }.onSuccess {
                 _user.postValue(it.data)
-            }.onFailure {
-                Log.d("Login", it.message ?: "")
+                _authMsg.postValue(it.message)
             }
         }
     }
@@ -35,9 +34,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
             runCatching {
                 authRepository.signup(SignUpRequest(name, username, password))
             }.onSuccess {
-                _isRegisterSuccess.postValue(true)
-            }.onFailure {
-                _isRegisterSuccess.postValue(false)
+                _authMsg.postValue(it.message)
             }
         }
 

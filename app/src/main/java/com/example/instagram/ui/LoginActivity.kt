@@ -39,8 +39,12 @@ class LoginActivity : AppCompatActivity() {
 
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
-            } else {
-                Toast.makeText(this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        authViewModel.authMsg.observe(this) {
+            if (it != null) {
+                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 

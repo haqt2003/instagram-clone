@@ -10,9 +10,9 @@ import retrofit2.http.PATCH
 import retrofit2.http.Path
 
 interface UserRepository {
-    @GET("users/{username}")
+    @GET("user/{username}")
     suspend fun getUser(@Path("username") username: String): ApiResponse<GetUserResponse>
 
-    @PATCH("users")
+    @PATCH("user")
     suspend fun updateUser(@Body updateUserRequest: UpdateUserRequest): ApiResponse<UpdateUserResponse>
 }

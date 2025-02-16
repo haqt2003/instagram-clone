@@ -27,14 +27,14 @@ class RegisterActivity : AppCompatActivity() {
             insets
         }
 
-        authViewModel.isRegisterSuccess.observe(this) {
-            if (it == true) {
-                Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show()
+        authViewModel.authMsg.observe(this) {
+            if (it != null) {
+                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
                 binding.etName.text?.clear()
                 binding.etUsername.text?.clear()
                 binding.etPassword.text?.clear()
             } else {
-                Toast.makeText(this, "Đăng ký thất bại!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Có lỗi!", Toast.LENGTH_SHORT).show()
                 binding.etName.text?.clear()
                 binding.etUsername.text?.clear()
                 binding.etPassword.text?.clear()
@@ -46,8 +46,10 @@ class RegisterActivity : AppCompatActivity() {
                 val name = etName.text.toString()
                 val username = etUsername.text.toString()
                 val password = etPassword.text.toString()
-                if (name.isNotEmpty() || username.length >= 6 || password.length >= 6) {
+                if (name.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
                     authViewModel.signup(name, username, password)
+                } else {
+                    Toast.makeText(this@RegisterActivity, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
                 }
             }
 
