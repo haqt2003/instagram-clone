@@ -2,7 +2,10 @@ package com.example.instagram.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -21,6 +24,17 @@ class MainActivity : AppCompatActivity() {
     private val profileFragment = ProfileFragment.newInstance()
 
     private val userViewModel: UserViewModel by viewModel()
+
+    private val pickMultipleMedia =
+        registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
+            if (uris.isNotEmpty()) {
+                val intent = Intent(this, AddPostActivity::class.java)
+                intent.putStringArrayListExtra("uris", ArrayList(uris.map { it.toString() }))
+                startActivity(intent)
+            } else {
+                Log.d("PhotoPicker", "No media selected")
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +77,10 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(homeFragment)
                 }
 
+                R.id.it_add -> {
+                    selectImages()
+                }
+
                 R.id.it_profile -> {
                     it.setIcon(R.drawable.ic_user)
 
@@ -80,5 +98,9 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction().replace(R.id.fcv_main, fragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    private fun selectImages() {
+        pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 }
