@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(libs.coil)
+    implementation (libs.circleindicator)
 
     implementation(libs.koin.android.v400)
     implementation(libs.retrofit)

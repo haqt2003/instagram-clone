@@ -57,6 +57,16 @@ class RegisterActivity : AppCompatActivity() {
                 val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                 startActivity(intent)
             }
+
+            ivShowPassword.setOnClickListener {
+                if (etPassword.inputType == 129) {
+                    etPassword.inputType = 1
+                    ivShowPassword.setImageResource(R.drawable.ic_show)
+                } else {
+                    etPassword.inputType = 129
+                    ivShowPassword.setImageResource(R.drawable.ic_hide)
+                }
+            }
         }
     }
 }

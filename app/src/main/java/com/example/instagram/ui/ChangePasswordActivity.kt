@@ -10,6 +10,8 @@ import com.example.instagram.R
 import com.example.instagram.data.models.request.UpdateUserRequest
 import com.example.instagram.databinding.ActivityChangePasswordBinding
 import com.example.instagram.viewmodels.UserViewModel
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangePasswordActivity : AppCompatActivity() {
@@ -53,20 +55,20 @@ class ChangePasswordActivity : AppCompatActivity() {
 
             if (oldPassword.isNotEmpty() && newPassword.isNotEmpty()) {
                 val sharedPreferences = getSharedPreferences("instagram", 0)
-                val id = sharedPreferences.getString("id", "")
-
-                val updateUserRequest = UpdateUserRequest(
-                    old_password = oldPassword,
-                    new_password = newPassword,
-                    name = null,
-                    avatar = null,
-                    gender = null,
-                    address = null,
-                    introduce = null,
-                    userId = id.toString()
+                val userId = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    sharedPreferences.getString("id", "").toString()
+                )
+                val old_password = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    oldPassword
+                )
+                val new_password = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    newPassword
                 )
 
-                userViewModel.updateUser(updateUserRequest)
+                userViewModel.updateUser(userId, old_password, new_password, null, null, null, null, null)
             } else {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             }

@@ -7,11 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import coil.load
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.R
 import com.example.instagram.adapters.GridSpacingItemDecoration
 import com.example.instagram.adapters.ProfileAdapter
@@ -28,6 +30,8 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
     private val postViewModel: PostViewModel by viewModel()
     private val userViewModel: UserViewModel by viewModel()
     private lateinit var adapter: ProfileAdapter
+//    private var currentPage = 1
+//    private var hasMoreDataUser = true
 
     private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
@@ -97,7 +101,7 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
             }
         }
 
-        postViewModel.getUserPosts("huycholl")
+        postViewModel.getUserPosts(user.username)
 
         userViewModel.getUser(user.username)
 

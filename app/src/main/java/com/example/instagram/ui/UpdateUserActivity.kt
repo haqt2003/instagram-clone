@@ -1,13 +1,11 @@
 package com.example.instagram.ui
 
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
-import android.util.Base64
 import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -19,12 +17,13 @@ import androidx.core.view.WindowInsetsCompat
 import coil.load
 import com.example.instagram.R
 import com.example.instagram.data.enums.Gender
-import com.example.instagram.data.models.request.UpdateUserRequest
 import com.example.instagram.databinding.ActivityUpdateUserBinding
 import com.example.instagram.viewmodels.UserViewModel
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
-import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.InputStream
 
@@ -35,15 +34,18 @@ class UpdateUserActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by viewModel()
     private val gender = arrayOf(Gender.MALE.value, Gender.FEMALE.value, Gender.OTHER.value)
 
-    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        if (uri != null) {
-            contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            binding.ivAvatar.setImageURI(uri)
-            binding.ivAvatar.tag = uri
-        } else {
-            Log.d("PhotoPicker", "No media selected")
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+                binding.ivAvatar.setImageURI(uri)
+                binding.ivAvatar.tag = uri
+            }
         }
-    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -79,28 +81,37 @@ class UpdateUserActivity : AppCompatActivity() {
             }
 
             btSave.setOnClickListener {
-                val name = etName.text.toString()
-                val address = etAddress.text.toString()
-                val introduce = etIntroduce.text.toString()
-                val gender = spGender.selectedItem.toString()
-                val id = sharedPreferences.getString("id", "")
+                val userId = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    sharedPreferences.getString("id", "").toString()
+                )
+                val name =
+                    RequestBody.create("text/plain".toMediaTypeOrNull(), etName.text.toString())
+                val address =
+                    RequestBody.create("text/plain".toMediaTypeOrNull(), etAddress.text.toString())
+                val introduce = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    etIntroduce.text.toString()
+                )
+                val gender = RequestBody.create(
+                    "text/plain".toMediaTypeOrNull(),
+                    spGender.selectedItem.toString()
+                )
                 val avatarUri = binding.ivAvatar.tag as? Uri
-                val avatarFile: File? = avatarUri?.let { uriToFile(this@UpdateUserActivity, it) }
-                val avatarBase64: String? = avatarFile?.let { fileToBase64(it) }
+                val avatarPart = prepareImageFilePart("avatar", avatarUri)
 
-                val updateUserRequest = UpdateUserRequest(
-                    old_password = null,
-                    new_password = null,
-                    name = name,
-                    avatar = avatarBase64,
-                    gender = gender,
-                    address = address,
-                    introduce = introduce,
-                    userId = id.toString()
+                userViewModel.updateUser(
+                    userId,
+                    null,
+                    null,
+                    name,
+                    avatarPart,
+                    gender,
+                    address,
+                    introduce
                 )
 
-                userViewModel.updateUser(updateUserRequest)
-                Log.d("UpdateUserActivity", "avatarBase64: $avatarBase64")
+                finish()
             }
 
             tvEditAvatar.setOnClickListener {
@@ -133,36 +144,27 @@ class UpdateUserActivity : AppCompatActivity() {
         }
     }
 
-    private fun uriToFile(context: Context, uri: Uri): File {
-        val contentResolver: ContentResolver = context.contentResolver
-        val fileName = getFileName(contentResolver, uri)
-        val tempFile = File(context.cacheDir, fileName)
+    private fun Context.prepareImageFilePart(partName: String, fileUri: Uri?): MultipartBody.Part? {
+        if (fileUri == null) return null
 
-        try {
-            val inputStream: InputStream? = contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(tempFile)
-            inputStream?.copyTo(outputStream)
-            inputStream?.close()
-            outputStream.close()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return tempFile
-    }
+        val contentResolver = contentResolver
 
-    private fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
-        var name = "temp_file"
-        val cursor = contentResolver.query(uri, null, null, null, null)
-        cursor?.use {
-            if (it.moveToFirst()) {
-                name = it.getString(it.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME))
+        val fileExtension = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(fileUri)) ?: "jpg"
+
+        val mimeType = "image/$fileExtension".toMediaTypeOrNull()
+
+        val inputStream: InputStream? = contentResolver.openInputStream(fileUri)
+        val file = File(cacheDir, "avatar_${System.currentTimeMillis()}.$fileExtension")
+
+        inputStream?.use { input ->
+            FileOutputStream(file).use { output ->
+                input.copyTo(output)
             }
         }
-        return name
+
+        val requestBody = RequestBody.create(mimeType, file)
+        return MultipartBody.Part.createFormData(partName, file.name, requestBody)
     }
 
-    private fun fileToBase64(file: File): String {
-        val bytes = FileInputStream(file).readBytes()
-        return Base64.encodeToString(bytes, Base64.NO_WRAP)
-    }
+
 }

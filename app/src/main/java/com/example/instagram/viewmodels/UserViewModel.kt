@@ -13,6 +13,8 @@ import com.example.instagram.data.models.response.UpdateUserResponse
 import com.example.instagram.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _user = MutableLiveData<GetUserResponse?>()
@@ -34,10 +36,28 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    fun updateUser(userRequest: UpdateUserRequest) {
+    fun updateUser(
+        userId: RequestBody,
+        oldPassword: RequestBody?,
+        newPassword: RequestBody?,
+        name: RequestBody?,
+        avatar: MultipartBody.Part?,
+        gender: RequestBody?,
+        address: RequestBody?,
+        introduce: RequestBody?
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                userRepository.updateUser(userRequest)
+                userRepository.updateUser(
+                    userId,
+                    oldPassword,
+                    newPassword,
+                    name,
+                    avatar,
+                    gender,
+                    address,
+                    introduce
+                )
             }.onSuccess {
                 _updateUser.postValue(it.data)
                 _updateMsg.postValue(it.message)

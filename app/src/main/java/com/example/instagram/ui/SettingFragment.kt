@@ -10,9 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.instagram.R
 import com.example.instagram.databinding.CustomDialogBinding
-import com.example.instagram.databinding.FragmentLogoutBottomSheetBinding
 import com.example.instagram.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment() {

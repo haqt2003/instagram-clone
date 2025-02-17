@@ -3,6 +3,9 @@ package com.example.instagram.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import coil.load
 import com.example.instagram.R
 import com.example.instagram.databinding.ActivityMainBinding
 import com.example.instagram.viewmodels.UserViewModel
@@ -70,27 +74,20 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(homeFragment)
         }
 
-        binding.bnvMain.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.it_home -> {
-                    it.setIcon(R.drawable.ic_home_active)
-                    replaceFragment(homeFragment)
-                }
-
-                R.id.it_add -> {
-                    selectImages()
-                }
-
-                R.id.it_profile -> {
-                    it.setIcon(R.drawable.ic_user)
-
-                    binding.bnvMain.menu.findItem(R.id.it_home)
-                        .setIcon(R.drawable.ic_home)
-
-                    replaceFragment(profileFragment)
-                }
+        with(binding) {
+            ivHome.setOnClickListener {
+                ivHome.setImageResource(R.drawable.ic_home_active)
+                replaceFragment(homeFragment)
+                ivRoundProfile.visibility = View.INVISIBLE
             }
-            true
+            ivAdd.setOnClickListener {
+                selectImages()
+            }
+            ivProfile.setOnClickListener {
+                ivHome.setImageResource(R.drawable.ic_home)
+                ivRoundProfile.visibility = View.VISIBLE
+                replaceFragment(profileFragment)
+            }
         }
     }
 

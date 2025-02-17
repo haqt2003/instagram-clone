@@ -72,7 +72,9 @@
         android:hint="Thêm chú thích..."
         android:background="@null"
         android:textColor="@color/black"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:lines="10"
+        android:gravity="start"/>
 
     <View
         android:id="@+id/v_divider1"
