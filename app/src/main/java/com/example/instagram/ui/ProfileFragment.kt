@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import coil.load
@@ -17,21 +16,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.R
 import com.example.instagram.adapters.GridSpacingItemDecoration
 import com.example.instagram.adapters.ProfileAdapter
-import com.example.instagram.data.enums.Gender
 import com.example.instagram.data.models.PostData
 import com.example.instagram.data.models.response.GetUserResponse
 import com.example.instagram.databinding.FragmentProfileBinding
 import com.example.instagram.viewmodels.PostViewModel
 import com.example.instagram.viewmodels.UserViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
     private lateinit var binding: FragmentProfileBinding
-    private val postViewModel: PostViewModel by viewModel()
+    private val postViewModel: PostViewModel by lazy {
+        requireActivity().getViewModel<PostViewModel>()
+    }
     private val userViewModel: UserViewModel by viewModel()
     private lateinit var adapter: ProfileAdapter
-//    private var currentPage = 1
-//    private var hasMoreDataUser = true
+    private var currentPage = 1
+    private var hasMoreDataUser = true
 
     private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
@@ -93,17 +94,37 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
         }
 
         postViewModel.userPosts.observe(viewLifecycleOwner) {
-            adapter.submitData(it)
-            if (it.isEmpty()) {
+            if (it.isNullOrEmpty()) {
                 binding.tvNone.visibility = View.VISIBLE
             } else {
                 binding.tvNone.visibility = View.GONE
+                adapter.submitData(it)
             }
         }
 
-        postViewModel.getUserPosts(user.username)
+        postViewModel.hasMoreDataUser.observe(viewLifecycleOwner) {
+            hasMoreDataUser = it
+        }
+
+        postViewModel.currentPageUserPost.observe(viewLifecycleOwner) {
+            currentPage = it
+        }
+
+        postViewModel.getUserPosts(user.username, currentPage)
 
         userViewModel.getUser(user.username)
+
+        binding.rvPosts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    if (hasMoreDataUser) {
+                        loadNextPage()
+                    }
+                }
+            }
+        })
 
         return binding.root
     }
@@ -130,5 +151,14 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fcv_main, detailFragment)
             .addToBackStack(null).commit()
+    }
+
+    private fun loadNextPage() {
+        val sharedPreferences = requireActivity().getSharedPreferences("instagram", 0)
+        val username = sharedPreferences.getString("username", "")
+        if (hasMoreDataUser) {
+            currentPage++
+            postViewModel.getUserPosts(username.toString(), currentPage)
+        }
     }
 }

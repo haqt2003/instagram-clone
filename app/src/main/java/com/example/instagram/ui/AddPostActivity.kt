@@ -18,7 +18,7 @@ import com.example.instagram.viewmodels.PostViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -27,7 +27,9 @@ class AddPostActivity : AppCompatActivity() {
     private val binding: ActivityAddPostBinding by lazy {
         ActivityAddPostBinding.inflate(layoutInflater)
     }
-    private val postViewModel: PostViewModel by viewModel()
+    private val postViewModel: PostViewModel by lazy {
+        getViewModel<PostViewModel>()
+    }
     private lateinit var adapter: AddPostAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +50,6 @@ class AddPostActivity : AppCompatActivity() {
         binding.rvPosts.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         adapter.submitData(uris ?: emptyList())
-
-        postViewModel.msg.observe(this) {
-            if (it != null) {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Đăng bài thành công!", Toast.LENGTH_SHORT).show()
-            }
-        }
 
         binding.btPost.setOnClickListener {
             if (binding.etContent.text.toString().isNotEmpty()) {
@@ -83,6 +77,12 @@ class AddPostActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             finish()
         }
+
+        postViewModel.msg.observe(this) {
+            if (it == "null") {
+                Toast.makeText(this, "Đăng bài thành công!", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun Context.prepareImageParts(imageUris: List<Uri>): List<MultipartBody.Part> {
@@ -90,13 +90,11 @@ class AddPostActivity : AppCompatActivity() {
         val contentResolver = contentResolver
 
         imageUris.forEachIndexed { index, uri ->
-            // Lấy phần mở rộng (jpg, png, jpeg)
             val fileExtension =
                 MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri))
                     ?: "jpg"
             val mimeType = "image/$fileExtension".toMediaTypeOrNull()
 
-            // Tạo file trong cache
             val inputStream: InputStream? = contentResolver.openInputStream(uri)
             val file = File(cacheDir, "image_${System.currentTimeMillis()}_${index}.$fileExtension")
 
@@ -106,7 +104,6 @@ class AddPostActivity : AppCompatActivity() {
                 }
             }
 
-            // Chuyển đổi file thành MultipartBody.Part
             val requestBody = RequestBody.create(mimeType, file)
             val part = MultipartBody.Part.createFormData("images", file.name, requestBody)
 

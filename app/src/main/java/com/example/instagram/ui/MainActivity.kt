@@ -4,8 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import coil.load
 import com.example.instagram.R
 import com.example.instagram.databinding.ActivityMainBinding
+import com.example.instagram.viewmodels.PostViewModel
 import com.example.instagram.viewmodels.UserViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +28,9 @@ class MainActivity : AppCompatActivity() {
     private val profileFragment = ProfileFragment.newInstance()
 
     private val userViewModel: UserViewModel by viewModel()
+    private val postViewModel: PostViewModel by lazy {
+        getViewModel<PostViewModel>()
+    }
 
     private val pickMultipleMedia =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(5)) { uris ->
@@ -68,6 +71,10 @@ class MainActivity : AppCompatActivity() {
                     .putInt("totalPost", it.totalPost)
                     .apply()
             }
+        }
+
+        postViewModel.msg.observe(this) {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
         }
 
         if (savedInstanceState == null) {

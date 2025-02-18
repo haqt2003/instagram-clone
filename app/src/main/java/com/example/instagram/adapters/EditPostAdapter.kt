@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import coil.load
 import com.example.instagram.R
-import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.LayoutItemEditBinding
 
 class EditPostAdapter(private val listener: OnClickListener) : BaseRecyclerView<LayoutItemEditBinding, String>() {

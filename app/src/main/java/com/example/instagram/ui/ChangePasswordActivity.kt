@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.instagram.R
-import com.example.instagram.data.models.request.UpdateUserRequest
 import com.example.instagram.databinding.ActivityChangePasswordBinding
 import com.example.instagram.viewmodels.UserViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull

@@ -1,5 +1,6 @@
 package com.example.instagram.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,8 +9,14 @@ import com.example.instagram.R
 import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.LayoutItemImageBinding
 
-class ImageAdapter(private val images: List<String>) :
+class ImageAdapter(
+    private val images: List<String>,
+    private val item: PostData,
+    private val listener: OnClickImageListener
+) :
     RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+
+    private var lastClickTime: Long = 0
 
     inner class ImageViewHolder(val binding: LayoutItemImageBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -28,10 +35,22 @@ class ImageAdapter(private val images: List<String>) :
                 error(R.drawable.no_image)
             }
         }
+
+        holder.binding.ivImage.setOnClickListener {
+            val currentTime = System.currentTimeMillis()
+            if (currentTime - lastClickTime < 300) {
+                listener.onDoubleClickImage(item)
+            }
+            lastClickTime = currentTime
+        }
     }
 
     override fun getItemCount(): Int {
         return if (images.isEmpty()) 1 else images.size
+    }
+
+    interface OnClickImageListener {
+        fun onDoubleClickImage(item: PostData)
     }
 }
 

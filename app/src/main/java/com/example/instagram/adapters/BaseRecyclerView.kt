@@ -12,10 +12,8 @@ abstract class BaseRecyclerView<VB : ViewBinding, T> :
 
     abstract fun setData(binding: VB, item: T, layoutPosition: Int)
 
-    // Abstract function to compare items for DiffUtil
     abstract fun areItemsTheSame(oldItem: T, newItem: T): Boolean
 
-    // Abstract function to compare contents for DiffUtil
     abstract fun areContentsTheSame(oldItem: T, newItem: T): Boolean
 
     open fun onClickViews(binding: VB, obj: T, layoutPosition: Int) {

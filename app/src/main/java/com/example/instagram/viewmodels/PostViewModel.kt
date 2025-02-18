@@ -24,42 +24,54 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
     private val _userPosts = MutableLiveData<List<PostData>>()
     val userPosts: LiveData<List<PostData>> get() = _userPosts
 
-    private val _msg = MutableLiveData<String?>()
-    val msg: MutableLiveData<String?> get() = _msg
+    private val _msg = MutableLiveData<String>()
+    val msg: LiveData<String> get() = _msg
 
-//    private val _hasMoreData = MutableLiveData<Boolean>()
-//    val hasMoreData: MutableLiveData<Boolean> get() = _hasMoreData
+    private val _hasMoreData = MutableLiveData<Boolean>()
+    val hasMoreData: MutableLiveData<Boolean> get() = _hasMoreData
+
+    private val _hasMoreDataUser = MutableLiveData<Boolean>()
+    val hasMoreDataUser: MutableLiveData<Boolean> get() = _hasMoreDataUser
+
+    private val _currentPageUserPost = MutableLiveData<Int>()
+    val currentPageUserPost: MutableLiveData<Int> get() = _currentPageUserPost
 
     fun getPosts(pageNumber: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 postRepository.getAllPosts(Sort.NEWEST.value, pageNumber, 10)
             }.onSuccess {
-                _posts.postValue(it.data?.data ?: listOf())
-            }.onFailure {
-                // Handle error
+                if (pageNumber > 1) {
+                    val newData = it.data?.data ?: emptyList()
+                    val currentData = _posts.value ?: emptyList()
+                    val updatedData = currentData + newData
+                    _posts.postValue(updatedData)
+                    _hasMoreData.postValue(newData.isNotEmpty())
+                } else {
+                    _posts.postValue(it.data?.data ?: emptyList())
+                    _hasMoreData.postValue(it.data?.data?.isNotEmpty() ?: false)
+                }
             }
         }
     }
 
-    fun getUserPosts(username: String) {
+    fun getUserPosts(username: String, pageNumber: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                postRepository.getUserPosts(username, Sort.NEWEST.value, 1, 10)
+                postRepository.getUserPosts(username, Sort.NEWEST.value, pageNumber, 10)
             }.onSuccess {
-                _userPosts.postValue(it.data?.data ?: listOf())
-            }.onFailure {
-                // Handle error
-            }
-        }
-    }
-
-    fun getAllUserPosts(username: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            runCatching {
-                postRepository.getAllUserPosts(username)
-            }.onSuccess {
-                _userPosts.postValue(it.data?.data ?: listOf())
+                if (pageNumber > 1) {
+                    val newData = it.data?.data ?: emptyList()
+                    val currentData = _userPosts.value ?: emptyList()
+                    val updatedData = currentData + newData
+                    _userPosts.postValue(updatedData)
+                    _hasMoreDataUser.postValue(newData.isNotEmpty())
+                    _currentPageUserPost.postValue(pageNumber)
+                } else {
+                    _userPosts.postValue(it.data?.data ?: emptyList())
+                    _hasMoreDataUser.postValue(it.data?.data?.isNotEmpty() ?: false)
+                    _currentPageUserPost.postValue(pageNumber)
+                }
             }
         }
     }
@@ -69,7 +81,7 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
             runCatching {
                 postRepository.addPost(userId, images, content)
             }.onSuccess {
-                _msg.postValue(it.message)
+                _msg.postValue(it.message.toString())
             }
         }
     }
@@ -79,7 +91,7 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
             runCatching {
                 postRepository.editPost(userId, postId, images, content)
             }.onSuccess {
-                _msg.postValue(it.message)
+                _msg.postValue(it.message.toString())
             }.onFailure { e ->
                 Log.e("ErLOg", "Error editing post", e)
             }
@@ -145,9 +157,9 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
             runCatching {
                 postRepository.deletePost(DeletePostRequest(userId, postId))
             }.onSuccess {
-                _msg.postValue(it.message)
+                _msg.postValue(it.message.toString())
+                _userPosts.postValue(_userPosts.value?.filter { post -> post._id != postId })
             }
         }
     }
-
 }

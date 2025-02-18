@@ -1,10 +1,7 @@
 package com.example.instagram.adapters
 
 import android.annotation.SuppressLint
-import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.ViewGroup
 import coil.load
 import com.example.instagram.R
@@ -12,10 +9,7 @@ import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.LayoutItemLinearBinding
 import com.example.instagram.utils.formatDate
 
-class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<LayoutItemLinearBinding, PostData>() {
-
-    private var lastClickTime: Long = 0
-
+class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<LayoutItemLinearBinding, PostData>(), ImageAdapter.OnClickImageListener{
     override fun getItemLayout(
         inflater: LayoutInflater,
         parent: ViewGroup
@@ -35,6 +29,7 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
     override fun setData(binding: LayoutItemLinearBinding, item: PostData, layoutPosition: Int) {
         val sharedPreferences = binding.root.context.getSharedPreferences("instagram", 0)
         val username = sharedPreferences.getString("username", "")
+
         with(binding) {
             if (item.author.avatar == "") {
                 ivAvatar.setImageResource(R.drawable.no_avatar)
@@ -46,7 +41,7 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
             }
 
             vpContent.isNestedScrollingEnabled = false
-            vpContent.adapter = ImageAdapter(item.images)
+            vpContent.adapter = ImageAdapter(item.images, item, this@HomeAdapter)
             ciIndi.setViewPager(vpContent)
 
             if (item.listLike.any { it.username == username.toString() }) {
@@ -65,17 +60,6 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
             ivMore.setOnClickListener {
                 listener.onMoreClicked(item)
             }
-            vpContent.setOnTouchListener { _, event ->
-                Log.d("HomeAdapter", "onTouch: ${event.action}")
-                if (event.action == MotionEvent.ACTION_UP) {
-                    val clickTime = SystemClock.elapsedRealtime()
-                    if (clickTime - lastClickTime < 300) {
-                        listener.onItemDoubleClicked(item)
-                    }
-                    lastClickTime = clickTime
-                }
-                false
-            }
         }
     }
 
@@ -83,5 +67,9 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
         fun onLikeClicked(item: PostData)
         fun onItemDoubleClicked(item: PostData)
         fun onMoreClicked(item: PostData)
+    }
+
+    override fun onDoubleClickImage(item: PostData) {
+        listener.onItemDoubleClicked(item)
     }
 }

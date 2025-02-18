@@ -39,6 +39,8 @@ class RegisterActivity : AppCompatActivity() {
                 binding.etUsername.text?.clear()
                 binding.etPassword.text?.clear()
             }
+            binding.btRegister.isEnabled = true
+            binding.btRegister.text = "Đăng ký"
         }
 
         with(binding) {
@@ -51,6 +53,8 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this@RegisterActivity, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
                 }
+                btRegister.isEnabled = false
+                btRegister.text = "Đăng ký..."
             }
 
             tvLogin.setOnClickListener {

@@ -8,19 +8,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.example.instagram.databinding.CustomDialogBinding
 import com.example.instagram.databinding.FragmentMoreBottomSheetBinding
 import com.example.instagram.viewmodels.PostViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MoreBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentMoreBottomSheetBinding
     private var userId: String? = null
     private var postId: String? = null
     private var username: String? = null
-    private val postViewModel: PostViewModel by viewModel()
+    private val postViewModel: PostViewModel by lazy {
+        requireActivity().getViewModel<PostViewModel>()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +55,8 @@ class MoreBottomSheetFragment : BottomSheetDialogFragment() {
         binding.clDelete.setOnClickListener {
             showDialog {
                 postViewModel.deletePost(userId.toString(),postId.toString())
+                dismiss()
             }
-        }
-
-        postViewModel.msg.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-            }
-            dismiss()
         }
     }
 

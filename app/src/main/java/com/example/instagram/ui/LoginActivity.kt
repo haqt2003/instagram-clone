@@ -1,5 +1,6 @@
 package com.example.instagram.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -17,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
         ActivityLoginBinding.inflate(layoutInflater)
     }
     private val authViewModel: AuthViewModel by viewModel()
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -40,6 +42,8 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
             }
+            binding.btLogin.isEnabled = true
+            binding.btLogin.text = "Đăng nhập"
         }
 
         authViewModel.authMsg.observe(this) {
@@ -50,6 +54,8 @@ class LoginActivity : AppCompatActivity() {
 
         with(binding) {
             btLogin.setOnClickListener {
+                btLogin.isEnabled = false
+                btLogin.text = "Đăng nhập..."
                 authViewModel.login(etUsername.text.toString(), etPassword.text.toString())
             }
 

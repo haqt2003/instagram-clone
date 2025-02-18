@@ -25,8 +25,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/iv_logo"
-            android:paddingBottom="80dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:paddingBottom="60dp"/>
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_posts" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

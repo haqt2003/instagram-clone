@@ -2,6 +2,7 @@ package com.example.instagram.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +21,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -29,9 +30,12 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
     private val binding: ActivityEditPostBinding by lazy {
         ActivityEditPostBinding.inflate(layoutInflater)
     }
-    private val postViewModel: PostViewModel by viewModel()
+    private val postViewModel: PostViewModel by lazy {
+        getViewModel<PostViewModel>()
+    }
     private lateinit var adapter: EditPostAdapter
     private val images = mutableListOf<String>()
+    private var currentPageUser = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -65,11 +69,20 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
             }
         }
 
-        postViewModel.msg.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        postViewModel.currentPageUserPost.observe(this) {
+            currentPageUser = it
         }
 
-        postViewModel.getAllUserPosts(username.toString())
+        postViewModel.msg.observe(this) {
+            if (it == "null") {
+                Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        postViewModel.getUserPosts(username.toString(), currentPageUser)
 
         binding.tvCancel.setOnClickListener {
             finish()
@@ -91,8 +104,10 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
 
                         val file = downloadImage(url)
 
-                        val requestBody = RequestBody.create("image/*".toMediaTypeOrNull(), file)
-                        MultipartBody.Part.createFormData("image", fileName, requestBody)
+                        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.extension) ?: "image/jpeg"
+                        val requestBody = RequestBody.create(mimeType.toMediaTypeOrNull(), file)
+
+                        MultipartBody.Part.createFormData("images", fileName, requestBody)
                     }
 
                     withContext(Dispatchers.Main) {
@@ -122,23 +137,21 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
     private suspend fun downloadImage(url: URL): File {
         return withContext(Dispatchers.IO) {
             val connection = url.openConnection() as HttpURLConnection
+            connection.requestMethod = "GET"
+            connection.doInput = true
             connection.connect()
 
-            val contentType = connection.contentType
-            val fileExtension = when {
-                contentType.contains("image/png") -> ".png"
-                contentType.contains("image/jpeg") || contentType.contains("image/jpg") -> ".jpg"
-                else -> ".jpg"
+            val inputStream = connection.inputStream
+            val fileExtension = MimeTypeMap.getFileExtensionFromUrl(url.toString()) ?: "jpg"
+            val file = File.createTempFile("temp_image", ".$fileExtension", cacheDir)
+
+            inputStream.use { input ->
+                file.outputStream().use { output ->
+                    input.copyTo(output)
+                }
             }
 
-            val tempFile = File.createTempFile("temp_image", fileExtension, cacheDir)
-
-            val inputStream = url.openStream()
-            tempFile.outputStream().use { outputStream ->
-                inputStream.copyTo(outputStream)
-            }
-
-            tempFile
+            file
         }
     }
 

@@ -69,9 +69,7 @@
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintHeight_percent="1.0"
         app:layout_constraintWidth_percent="1.0"
-        android:layout_marginTop="20dp"
-        android:clickable="true"
-        android:focusable="true"/>
+        android:layout_marginTop="20dp" />
 
     <me.relex.circleindicator.CircleIndicator3
         android:id="@+id/ci_indi"
