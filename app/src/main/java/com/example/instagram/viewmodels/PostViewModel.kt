@@ -55,10 +55,10 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
         }
     }
 
-    fun getUserPosts(username: String, pageNumber: Int) {
+    fun getUserPosts(username: String, pageNumber: Int, perPage: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                postRepository.getUserPosts(username, Sort.NEWEST.value, pageNumber, 10)
+                postRepository.getUserPosts(username, Sort.NEWEST.value, pageNumber, perPage)
             }.onSuccess {
                 if (pageNumber > 1) {
                     val newData = it.data?.data ?: emptyList()
@@ -161,6 +161,16 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
             }.onSuccess {
                 _msg.postValue(it.message.toString())
                 _userPosts.postValue(_userPosts.value?.filter { post -> post._id != postId })
+            }
+        }
+    }
+
+    fun getAllUserPosts(username: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            runCatching {
+                postRepository.getAllUserPosts(username)
+            }.onSuccess {
+                _userPosts.postValue(it.data?.data ?: emptyList())
             }
         }
     }

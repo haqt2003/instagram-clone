@@ -75,7 +75,8 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
             currentPageUser = it
         }
 
-        postViewModel.getUserPosts(username.toString(), currentPageUser)
+        postViewModel.getAllUserPosts(username.toString())
+//        postViewModel.getUserPosts(username.toString(), currentPageUser, 10)
 
         binding.tvCancel.setOnClickListener {
             finish()

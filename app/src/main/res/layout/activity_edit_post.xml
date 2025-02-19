@@ -90,7 +90,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/avatar"
+            android:src="@drawable/no_avatar"
             android:scaleType="centerCrop"
             android:clipToOutline="true"
             android:outlineProvider="background"
@@ -104,7 +104,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_avatar"
             android:layout_marginStart="12dp"
-            android:text="green.thrift"
+            android:text="username"
             android:fontFamily="@font/inter_bold" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

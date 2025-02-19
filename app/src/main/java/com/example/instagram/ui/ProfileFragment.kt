@@ -111,7 +111,7 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
             currentPage = it
         }
 
-        postViewModel.getUserPosts(user.username, currentPage)
+        postViewModel.getUserPosts(user.username, currentPage, 15)
 
         userViewModel.getUser(user.username)
 
@@ -150,7 +150,7 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
         val detailFragment = DetailFragment.newInstance(item._id)
 
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fcv_main, detailFragment)
+            .add(R.id.fcv_main, detailFragment)
             .addToBackStack(null).commit()
     }
 
@@ -159,7 +159,7 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
         val username = sharedPreferences.getString("username", "")
         if (hasMoreDataUser) {
             currentPage++
-            postViewModel.getUserPosts(username.toString(), currentPage)
+            postViewModel.getUserPosts(username.toString(), currentPage, 20)
         }
     }
 }

@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="green.thrift"
+                android:text="username"
                 android:textSize="24dp"
                 android:fontFamily="@font/inter_bold"/>
 
@@ -91,7 +91,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="25"
+                    android:text="--"
                     android:textSize="16dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/inter_bold"/>

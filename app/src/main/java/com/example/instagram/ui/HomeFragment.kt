@@ -42,11 +42,8 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
 
         postViewModel.posts.observe(viewLifecycleOwner) {
             adapter.submitData(it)
-            if (it.isEmpty()) {
-                binding.pbLoading.visibility = View.VISIBLE
-            } else {
-                binding.pbLoading.visibility = View.GONE
-            }
+            binding.pbLoadingStart.visibility = View.GONE
+            binding.pbLoading.visibility = View.GONE
         }
 
         postViewModel.msg.observe(viewLifecycleOwner) {
@@ -67,7 +64,10 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
 
                 if (!recyclerView.canScrollVertically(1)) {
                     if (hasMoreData) {
+                        binding.pbLoading.visibility = View.VISIBLE
                         loadNextPage()
+                    } else {
+                        binding.pbLoading.visibility = View.GONE
                     }
                 }
             }

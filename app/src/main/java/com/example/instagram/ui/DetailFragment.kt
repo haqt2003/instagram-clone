@@ -5,20 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.replace
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.instagram.R
 import com.example.instagram.adapters.HomeAdapter
 import com.example.instagram.data.enums.Gender
 import com.example.instagram.data.models.AuthorData
 import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.FragmentDetailBinding
 import com.example.instagram.viewmodels.PostViewModel
+import com.example.instagram.viewmodels.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
     private lateinit var binding: FragmentDetailBinding
     private val postViewModel: PostViewModel by lazy {
         requireActivity().getViewModel<PostViewModel>()
+    }
+    private val userViewModel: UserViewModel by lazy {
+        requireActivity().getViewModel<UserViewModel>()
     }
     private lateinit var adapter: HomeAdapter
     private var postId: String? = null
@@ -48,14 +54,18 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
         binding.tvUsername.text = username
 
         postViewModel.msg.observe(viewLifecycleOwner) {
-            currentPage = 1
-            postViewModel.getUserPosts(username.toString(), currentPage)
+            postViewModel.getUserPosts(username.toString(), currentPage, 10)
         }
 
         postViewModel.userPosts.observe(viewLifecycleOwner) {
             adapter.submitData(it)
+            binding.pbLoading.visibility = View.GONE
             if (it.isEmpty()) {
-                requireActivity().supportFragmentManager.popBackStack()
+                val profileFragment = ProfileFragment.newInstance()
+
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fcv_main, profileFragment)
+                    .commit()
             }
 
             postId?.let { id ->
@@ -76,9 +86,10 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
             currentPage = it
         }
 
-        postViewModel.getUserPosts(username.toString(), currentPage)
+//        postViewModel.getUserPosts(username.toString(), currentPage, 10)
 
         binding.ivBack.setOnClickListener {
+            userViewModel.getUser(username.toString())
             requireActivity().supportFragmentManager.popBackStack()
         }
 
@@ -88,7 +99,10 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
 
                 if (!recyclerView.canScrollVertically(1)) {
                     if (hasMoreDataUser) {
+                        binding.pbLoading.visibility = View.VISIBLE
                         loadNextPage()
+                    } else {
+                        binding.pbLoading.visibility = View.GONE
                     }
                 }
             }
@@ -158,7 +172,7 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
         val username = sharedPreferences.getString("username", "")
         if (hasMoreDataUser) {
             currentPage++
-            postViewModel.getUserPosts(username.toString(), currentPage)
+            postViewModel.getUserPosts(username.toString(), currentPage, 10)
         }
     }
 }
