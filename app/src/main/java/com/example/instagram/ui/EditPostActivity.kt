@@ -3,6 +3,7 @@ package com.example.instagram.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -103,8 +104,8 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
                     }
 
                     withContext(Dispatchers.Main) {
-                        binding.tvConfirm.isEnabled = false
-                        binding.tvConfirm.text = "Cập nhật..."
+                        binding.tvConfirm.visibility = View.GONE
+                        binding.pbLoading.visibility = View.VISIBLE
                         postViewModel.editPost(userId, postId, imagesPath, content)
                         postViewModel.msg.observe(this@EditPostActivity) { message ->
                             val intent = Intent(this@EditPostActivity, MainActivity::class.java)

@@ -62,11 +62,7 @@ class UpdateUserActivity : AppCompatActivity() {
         val username = sharedPreferences.getString("username", "")
 
         userViewModel.updateMsg.observe(this) {
-            if (it != null) {
-                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show()
-            }
+            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
         }
 
         with(binding) {
@@ -101,6 +97,8 @@ class UpdateUserActivity : AppCompatActivity() {
                 )
                 val avatarUri = binding.ivAvatar.tag as? Uri
                 val avatarPart = prepareImageFilePart("avatar", avatarUri)
+
+                btSave.text = "Lưu thông tin..."
 
                 userViewModel.updateUser(
                     userId,

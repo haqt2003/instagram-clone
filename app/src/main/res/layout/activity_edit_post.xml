@@ -52,6 +52,16 @@
             android:fontFamily="@font/inter_medium"
             android:textColor="#425BFF"/>
 
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            android:indeterminateTint="#425BFF"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

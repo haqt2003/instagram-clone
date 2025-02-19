@@ -60,7 +60,7 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
                 )
             }.onSuccess {
                 _updateUser.postValue(it.data)
-                _updateMsg.postValue(it.message)
+                _updateMsg.postValue(it.message ?: "Cập nhật thành công!")
             }
         }
     }

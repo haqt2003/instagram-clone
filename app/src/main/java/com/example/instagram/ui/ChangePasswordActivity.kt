@@ -21,6 +21,7 @@ class ChangePasswordActivity : AppCompatActivity() {
     private val userViewModel: UserViewModel by lazy {
         getViewModel<UserViewModel>()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,15 +33,10 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
 
         userViewModel.updateMsg.observe(this) {
-            if (it != null) {
-                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-                binding.etOldPassword.text?.clear()
-                binding.etNewPassword.text?.clear()
-            } else {
-                Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show()
-                binding.etOldPassword.text?.clear()
-                binding.etNewPassword.text?.clear()
-            }
+            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            binding.etOldPassword.text?.clear()
+            binding.etNewPassword.text?.clear()
+            binding.btSave.text = "Đổi mật khẩu"
         }
 
         binding.ivBack.setOnClickListener {
@@ -70,7 +66,17 @@ class ChangePasswordActivity : AppCompatActivity() {
                     newPassword
                 )
 
-                userViewModel.updateUser(userId, old_password, new_password, null, null, null, null, null)
+                binding.btSave.text = "Đổi mật khẩu..."
+                userViewModel.updateUser(
+                    userId,
+                    old_password,
+                    new_password,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                )
             } else {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             }
