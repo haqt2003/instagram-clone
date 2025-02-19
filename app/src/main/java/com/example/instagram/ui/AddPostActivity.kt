@@ -61,10 +61,20 @@ class AddPostActivity : AppCompatActivity() {
                 val imagesUri =
                     intent.getStringArrayListExtra("uris")?.map { Uri.parse(it) } ?: emptyList()
                 val imageParts = prepareImageParts(imagesUri)
-                postViewModel.addPost(userId, imageParts, content)
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                if (imageParts.isEmpty()) {
+                    Toast.makeText(this, "Ảnh không đúng định dạng!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                } else {
+                    binding.btPost.isEnabled = false
+                    binding.btPost.text = "Chia sẻ..."
+                    postViewModel.addPost(userId, imageParts, content)
+                    postViewModel.msg.observe(this) { message ->
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.putExtra("msg", message)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
             } else {
                 Toast.makeText(this, "Vui lòng nhập nội dung!", Toast.LENGTH_SHORT).show()
             }
@@ -77,12 +87,6 @@ class AddPostActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             finish()
         }
-
-        postViewModel.msg.observe(this) {
-            if (it == "null") {
-                Toast.makeText(this, "Đăng bài thành công!", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     private fun Context.prepareImageParts(imageUris: List<Uri>): List<MultipartBody.Part> {
@@ -93,6 +97,11 @@ class AddPostActivity : AppCompatActivity() {
             val fileExtension =
                 MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri))
                     ?: "jpg"
+
+            if (fileExtension != "jpg" && fileExtension != "png" && fileExtension != "jpeg") {
+                return@forEachIndexed
+            }
+
             val mimeType = "image/$fileExtension".toMediaTypeOrNull()
 
             val inputStream: InputStream? = contentResolver.openInputStream(uri)

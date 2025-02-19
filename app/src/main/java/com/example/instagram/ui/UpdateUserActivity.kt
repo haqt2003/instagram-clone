@@ -21,6 +21,7 @@ import com.example.instagram.viewmodels.UserViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -30,7 +31,9 @@ class UpdateUserActivity : AppCompatActivity() {
     private val binding: ActivityUpdateUserBinding by lazy {
         ActivityUpdateUserBinding.inflate(layoutInflater)
     }
-    private val userViewModel: UserViewModel by viewModel()
+    private val userViewModel: UserViewModel by lazy {
+        getViewModel<UserViewModel>()
+    }
     private val gender = arrayOf(Gender.MALE.value, Gender.FEMALE.value, Gender.OTHER.value)
 
     private val pickMedia =
@@ -148,7 +151,9 @@ class UpdateUserActivity : AppCompatActivity() {
 
         val contentResolver = contentResolver
 
-        val fileExtension = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(fileUri)) ?: "jpg"
+        val fileExtension =
+            MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(fileUri))
+                ?: "jpg"
 
         val mimeType = "image/$fileExtension".toMediaTypeOrNull()
 

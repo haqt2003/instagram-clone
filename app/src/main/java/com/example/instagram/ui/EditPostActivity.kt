@@ -1,5 +1,6 @@
 package com.example.instagram.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.webkit.MimeTypeMap
@@ -73,15 +74,6 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
             currentPageUser = it
         }
 
-        postViewModel.msg.observe(this) {
-            if (it == "null") {
-                Toast.makeText(this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show()
-                finish()
-            } else {
-                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-            }
-        }
-
         postViewModel.getUserPosts(username.toString(), currentPageUser)
 
         binding.tvCancel.setOnClickListener {
@@ -111,8 +103,15 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
                     }
 
                     withContext(Dispatchers.Main) {
+                        binding.tvConfirm.isEnabled = false
+                        binding.tvConfirm.text = "Cập nhật..."
                         postViewModel.editPost(userId, postId, imagesPath, content)
-                        finish()
+                        postViewModel.msg.observe(this@EditPostActivity) { message ->
+                            val intent = Intent(this@EditPostActivity, MainActivity::class.java)
+                            intent.putExtra("msg", message)
+                            startActivity(intent)
+                            finish()
+                        }
                     }
 
                 } catch (e: Exception) {

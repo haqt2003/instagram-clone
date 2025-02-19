@@ -3,6 +3,7 @@ package com.example.instagram.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,11 +29,14 @@ class LoginActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val saveUsername = intent.getStringExtra("username")
+        val savePassword = intent.getStringExtra("password")
+
+        val sharedPreferences = getSharedPreferences("instagram", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
 
         authViewModel.user.observe(this) {
             if (it != null) {
-                val sharedPreferences = getSharedPreferences("instagram", MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
                 editor
                     .putString("username", it.username)
                     .putString("id", it._id)
@@ -53,6 +57,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         with(binding) {
+            etUsername.setText(saveUsername)
+            etPassword.setText(savePassword)
+
             btLogin.setOnClickListener {
                 btLogin.isEnabled = false
                 btLogin.text = "Đăng nhập..."

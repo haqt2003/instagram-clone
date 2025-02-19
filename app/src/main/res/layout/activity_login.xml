@@ -37,6 +37,7 @@
             android:paddingEnd="60dp"
             android:background="@drawable/custom_edittext"
             android:textSize="14sp"
+            android:textColor="@color/black"
             android:hint="Tên đăng nhập" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -51,6 +52,7 @@
             android:background="@drawable/custom_edittext"
             android:textSize="14sp"
             android:hint="Mật khẩu"
+            android:textColor="@color/black"
             android:inputType="textPassword"/>
 
         <androidx.appcompat.widget.AppCompatImageView

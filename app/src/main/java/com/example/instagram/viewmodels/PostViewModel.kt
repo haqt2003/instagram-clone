@@ -81,19 +81,22 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
             runCatching {
                 postRepository.addPost(userId, images, content)
             }.onSuccess {
-                _msg.postValue(it.message.toString())
+                _msg.postValue(it.message ?: "Thêm bài viết thành công!")
             }
         }
     }
 
-    fun editPost(userId: RequestBody, postId: RequestBody, images: List<MultipartBody.Part>, content: RequestBody?) {
+    fun editPost(
+        userId: RequestBody,
+        postId: RequestBody,
+        images: List<MultipartBody.Part>,
+        content: RequestBody?
+    ) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 postRepository.editPost(userId, postId, images, content)
             }.onSuccess {
-                _msg.postValue(it.message.toString())
-            }.onFailure { e ->
-                Log.e("ErLOg", "Error editing post", e)
+                _msg.postValue(it.message ?: "Sửa bài viết thành công!")
             }
         }
     }
@@ -148,7 +151,6 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
                     }
                 })
             }
-
         }
     }
 

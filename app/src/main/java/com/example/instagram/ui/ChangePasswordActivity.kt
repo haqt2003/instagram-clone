@@ -11,13 +11,16 @@ import com.example.instagram.databinding.ActivityChangePasswordBinding
 import com.example.instagram.viewmodels.UserViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangePasswordActivity : AppCompatActivity() {
     private val binding: ActivityChangePasswordBinding by lazy {
         ActivityChangePasswordBinding.inflate(layoutInflater)
     }
-    private val userViewModel: UserViewModel by viewModel()
+    private val userViewModel: UserViewModel by lazy {
+        getViewModel<UserViewModel>()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

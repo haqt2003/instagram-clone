@@ -22,14 +22,15 @@ import com.example.instagram.databinding.FragmentProfileBinding
 import com.example.instagram.viewmodels.PostViewModel
 import com.example.instagram.viewmodels.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
     private lateinit var binding: FragmentProfileBinding
     private val postViewModel: PostViewModel by lazy {
         requireActivity().getViewModel<PostViewModel>()
     }
-    private val userViewModel: UserViewModel by viewModel()
+    private val userViewModel: UserViewModel by lazy {
+        requireActivity().getViewModel<UserViewModel>()
+    }
     private lateinit var adapter: ProfileAdapter
     private var currentPage = 1
     private var hasMoreDataUser = true

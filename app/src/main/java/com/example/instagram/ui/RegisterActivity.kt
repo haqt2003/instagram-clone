@@ -30,9 +30,11 @@ class RegisterActivity : AppCompatActivity() {
         authViewModel.authMsg.observe(this) {
             if (it != null) {
                 Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-                binding.etName.text?.clear()
-                binding.etUsername.text?.clear()
-                binding.etPassword.text?.clear()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.putExtra("username", binding.etUsername.text.toString())
+                intent.putExtra("password", binding.etPassword.text.toString())
+                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "Có lỗi!", Toast.LENGTH_SHORT).show()
                 binding.etName.text?.clear()
@@ -51,7 +53,11 @@ class RegisterActivity : AppCompatActivity() {
                 if (name.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
                     authViewModel.signup(name, username, password)
                 } else {
-                    Toast.makeText(this@RegisterActivity, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Vui lòng nhập đầy đủ thông tin",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 btRegister.isEnabled = false
                 btRegister.text = "Đăng ký..."

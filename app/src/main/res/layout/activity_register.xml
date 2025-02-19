@@ -36,6 +36,7 @@
             android:paddingHorizontal="16dp"
             android:background="@drawable/custom_edittext"
             android:textSize="14sp"
+            android:textColor="@color/black"
             android:hint="Họ và tên" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -49,6 +50,7 @@
             android:paddingEnd="60dp"
             android:background="@drawable/custom_edittext"
             android:textSize="14sp"
+            android:textColor="@color/black"
             android:hint="Tên đăng nhập" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -63,6 +65,7 @@
             android:background="@drawable/custom_edittext"
             android:textSize="14sp"
             android:hint="Mật khẩu"
+            android:textColor="@color/black"
             android:inputType="textPassword"/>
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -101,7 +104,8 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn đã có tài khoản."/>
+                android:text="Bạn đã có tài khoản."
+                android:textColor="@color/black"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_login"

@@ -12,12 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import coil.load
 import com.example.instagram.R
 import com.example.instagram.databinding.ActivityMainBinding
 import com.example.instagram.viewmodels.PostViewModel
 import com.example.instagram.viewmodels.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +27,9 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment = HomeFragment.newInstance()
     private val profileFragment = ProfileFragment.newInstance()
 
-    private val userViewModel: UserViewModel by viewModel()
+    private val userViewModel: UserViewModel by lazy {
+        getViewModel<UserViewModel>()
+    }
     private val postViewModel: PostViewModel by lazy {
         getViewModel<PostViewModel>()
     }
@@ -64,17 +66,23 @@ class MainActivity : AppCompatActivity() {
             userViewModel.getUser(username)
         }
 
+        val msg = intent.getStringExtra("msg")
+        if (!msg.isNullOrEmpty()) {
+            postViewModel.getPosts(1)
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        }
+
         userViewModel.user.observe(this) {
             if (it != null) {
                 val editor = sharedPreferences.edit()
                 editor
                     .putInt("totalPost", it.totalPost)
                     .apply()
-            }
-        }
 
-        postViewModel.msg.observe(this) {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                binding.ivProfile.load(it.avatar) {
+                    error(R.drawable.no_avatar)
+                }
+            }
         }
 
         if (savedInstanceState == null) {
@@ -82,6 +90,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         with(binding) {
+
             ivHome.setOnClickListener {
                 ivHome.setImageResource(R.drawable.ic_home_active)
                 replaceFragment(homeFragment)

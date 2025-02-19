@@ -1,6 +1,7 @@
 package com.example.instagram.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,7 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
             }
         }
 
-        postViewModel.msg.observe(requireActivity()) {
+        postViewModel.msg.observe(viewLifecycleOwner) {
             currentPage = 1
             postViewModel.getPosts(currentPage)
         }
