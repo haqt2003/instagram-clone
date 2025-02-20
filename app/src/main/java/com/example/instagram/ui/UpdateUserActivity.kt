@@ -22,7 +22,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -61,13 +60,36 @@ class UpdateUserActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("instagram", MODE_PRIVATE)
         val username = sharedPreferences.getString("username", "")
 
+        if (username != null) {
+            userViewModel.getUser(username)
+        }
+
         userViewModel.updateMsg.observe(this) {
             Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
         }
 
+        userViewModel.user.observe(this) {
+            if (it != null) {
+                binding.ivAvatar.load(it.avatar) {
+                    error(R.drawable.no_avatar)
+                }
+                binding.etName.setText(it.name)
+                binding.etAddress.setText(it.address)
+                binding.etIntroduce.setText(it.introduce)
+                binding.tvUsername.text = it.username
+                val genderIndex = it.gender.let { gender ->
+                    when (gender) {
+                        Gender.MALE.value -> 0
+                        Gender.FEMALE.value -> 1
+                        else -> 2
+                    }
+                }
+                binding.spGender.setSelection(genderIndex)
+            }
+        }
+
         with(binding) {
             spGender.adapter = genderAdapter
-
 
             ivBack.setOnClickListener {
                 finish()
@@ -118,30 +140,6 @@ class UpdateUserActivity : AppCompatActivity() {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
         }
-
-        userViewModel.user.observe(this) {
-            if (it != null) {
-                binding.ivAvatar.load(it.avatar) {
-                    error(R.drawable.no_avatar)
-                }
-                binding.etName.setText(it.name)
-                binding.etAddress.setText(it.address)
-                binding.etIntroduce.setText(it.introduce)
-                binding.tvUsername.text = it.username
-                val genderIndex = it.gender.let { gender ->
-                    when (gender) {
-                        Gender.MALE.value -> 0
-                        Gender.FEMALE.value -> 1
-                        else -> 2
-                    }
-                }
-                binding.spGender.setSelection(genderIndex)
-            }
-        }
-
-        if (username != null) {
-            userViewModel.getUser(username)
-        }
     }
 
     private fun Context.prepareImageFilePart(partName: String, fileUri: Uri?): MultipartBody.Part? {
@@ -167,6 +165,4 @@ class UpdateUserActivity : AppCompatActivity() {
         val requestBody = RequestBody.create(mimeType, file)
         return MultipartBody.Part.createFormData(partName, file.name, requestBody)
     }
-
-
 }

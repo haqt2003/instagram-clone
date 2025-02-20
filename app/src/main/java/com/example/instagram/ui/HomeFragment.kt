@@ -51,12 +51,11 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
             postViewModel.getPosts(currentPage)
         }
 
-        postViewModel.getPosts(currentPage)
-
-
         postViewModel.hasMoreData.observe(viewLifecycleOwner) {
             hasMoreData = it
         }
+
+        postViewModel.getPosts(currentPage)
 
         binding.rvPosts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

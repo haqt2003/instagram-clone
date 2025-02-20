@@ -12,7 +12,6 @@ import com.example.instagram.viewmodels.UserViewModel
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.koin.androidx.viewmodel.ext.android.getViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChangePasswordActivity : AppCompatActivity() {
     private val binding: ActivityChangePasswordBinding by lazy {
@@ -81,7 +80,5 @@ class ChangePasswordActivity : AppCompatActivity() {
                 Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
 }

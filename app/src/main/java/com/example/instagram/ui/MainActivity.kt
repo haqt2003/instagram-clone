@@ -2,7 +2,6 @@ package com.example.instagram.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -20,7 +19,6 @@ import com.example.instagram.viewmodels.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : AppCompatActivity() {
-
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -40,8 +38,6 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, AddPostActivity::class.java)
                 intent.putStringArrayListExtra("uris", ArrayList(uris.map { it.toString() }))
                 startActivity(intent)
-            } else {
-                Log.d("PhotoPicker", "No media selected")
             }
         }
 
@@ -53,6 +49,10 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        if (savedInstanceState == null) {
+            replaceFragment(homeFragment)
         }
 
         val sharedPreferences = getSharedPreferences("instagram", MODE_PRIVATE)
@@ -85,12 +85,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (savedInstanceState == null) {
-            replaceFragment(homeFragment)
-        }
-
         with(binding) {
-
             ivHome.setOnClickListener {
                 ivHome.setImageResource(R.drawable.ic_home_active)
                 replaceFragment(homeFragment)

@@ -76,7 +76,6 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
         }
 
         postViewModel.getAllUserPosts(username.toString())
-//        postViewModel.getUserPosts(username.toString(), currentPageUser, 10)
 
         binding.tvCancel.setOnClickListener {
             finish()
@@ -95,9 +94,7 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
                     val imagesPath = images.map { imageUrl ->
                         val url = URL(imageUrl)
                         val fileName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1)
-
                         val file = downloadImage(url)
-
                         val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.extension) ?: "image/jpeg"
                         val requestBody = RequestBody.create(mimeType.toMediaTypeOrNull(), file)
 
@@ -118,9 +115,6 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
 
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    withContext(Dispatchers.Main) {
-
-                    }
                 }
             }
         }

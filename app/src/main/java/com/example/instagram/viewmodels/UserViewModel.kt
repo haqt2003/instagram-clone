@@ -1,13 +1,8 @@
 package com.example.instagram.viewmodels
 
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.instagram.data.models.PostData
-import com.example.instagram.data.models.request.UpdateUserRequest
-import com.example.instagram.data.models.response.AuthResponse
 import com.example.instagram.data.models.response.GetUserResponse
 import com.example.instagram.data.models.response.UpdateUserResponse
 import com.example.instagram.repositories.UserRepository

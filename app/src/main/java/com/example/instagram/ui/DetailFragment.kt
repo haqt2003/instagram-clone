@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.replace
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.R
@@ -85,8 +84,6 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
         postViewModel.currentPageUserPost.observe(viewLifecycleOwner) {
             currentPage = it
         }
-
-//        postViewModel.getUserPosts(username.toString(), currentPage, 10)
 
         binding.ivBack.setOnClickListener {
             userViewModel.getUser(username.toString())

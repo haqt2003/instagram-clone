@@ -76,6 +76,18 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
                     .replace(R.id.fcv_main, settingFragment)
                     .addToBackStack(null).commit()
             }
+
+            rvPosts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    if (!recyclerView.canScrollVertically(1)) {
+                        if (hasMoreDataUser) {
+                            loadNextPage()
+                        }
+                    }
+                }
+            })
         }
 
         userViewModel.user.observe(viewLifecycleOwner) {
@@ -115,35 +127,12 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
 
         userViewModel.getUser(user.username)
 
-        binding.rvPosts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (!recyclerView.canScrollVertically(1)) {
-                    if (hasMoreDataUser) {
-                        loadNextPage()
-                    }
-                }
-            }
-        })
-
         return binding.root
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = ProfileFragment()
-    }
-
-    private fun getPrefs(): GetUserResponse {
-        val sharedPreferences = requireActivity().getSharedPreferences("instagram", 0)
-        val username = sharedPreferences.getString("username", "")
-        val avatar = sharedPreferences.getString("avatar", "")
-        val totalPost = sharedPreferences.getInt("totalPost", 0)
-
-        return GetUserResponse(
-            username.toString(), "", avatar.toString(), "", "", "", totalPost
-        )
     }
 
     override fun onClickItem(item: PostData) {
@@ -161,5 +150,16 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
             currentPage++
             postViewModel.getUserPosts(username.toString(), currentPage, 20)
         }
+    }
+
+    private fun getPrefs(): GetUserResponse {
+        val sharedPreferences = requireActivity().getSharedPreferences("instagram", 0)
+        val username = sharedPreferences.getString("username", "")
+        val avatar = sharedPreferences.getString("avatar", "")
+        val totalPost = sharedPreferences.getInt("totalPost", 0)
+
+        return GetUserResponse(
+            username.toString(), "", avatar.toString(), "", "", "", totalPost
+        )
     }
 }

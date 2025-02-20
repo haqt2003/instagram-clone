@@ -10,6 +10,7 @@ import com.example.instagram.databinding.LayoutItemLinearBinding
 import com.example.instagram.utils.formatDate
 
 class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<LayoutItemLinearBinding, PostData>(), ImageAdapter.OnClickImageListener{
+
     override fun getItemLayout(
         inflater: LayoutInflater,
         parent: ViewGroup

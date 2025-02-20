@@ -23,7 +23,7 @@ class SettingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingBinding.inflate(inflater, container, false)
 
         binding.tvLogout.setOnClickListener {
