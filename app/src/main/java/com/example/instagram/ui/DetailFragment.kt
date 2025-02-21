@@ -127,6 +127,7 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
 
         if (userId != null) {
             if (username != null) {
+                postId = item._id
                 postViewModel.likePost(
                     userId,
                     item._id,
@@ -144,6 +145,7 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
 
         if (userId != null) {
             if (username != null) {
+                postId = item._id
                 postViewModel.likePost(
                     userId,
                     item._id,
