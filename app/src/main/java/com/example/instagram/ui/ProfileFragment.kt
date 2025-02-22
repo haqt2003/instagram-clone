@@ -48,6 +48,9 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val user = getPrefs()
+        postViewModel.getUserPosts(user.username, currentPage, 15)
+        userViewModel.getUser(user.username)
     }
 
     @SuppressLint("SetTextI18n")
@@ -56,8 +59,6 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-
-        val user = getPrefs()
 
         adapter = ProfileAdapter(this)
 
@@ -111,8 +112,8 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
                 binding.tvNone.visibility = View.VISIBLE
             } else {
                 binding.tvNone.visibility = View.GONE
-                adapter.submitData(it)
             }
+            adapter.submitData(it)
         }
 
         postViewModel.hasMoreDataUser.observe(viewLifecycleOwner) {
@@ -123,10 +124,6 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
             currentPage = it
         }
 
-        postViewModel.getUserPosts(user.username, currentPage, 15)
-
-        userViewModel.getUser(user.username)
-
         return binding.root
     }
 
@@ -136,7 +133,7 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
     }
 
     override fun onClickItem(item: PostData) {
-        val detailFragment = DetailFragment.newInstance(item._id)
+        val detailFragment = DetailFragment.newInstance(item._id, item.author.username)
 
         requireActivity().supportFragmentManager.beginTransaction()
             .add(R.id.fcv_main, detailFragment)

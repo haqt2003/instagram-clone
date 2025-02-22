@@ -39,7 +39,8 @@
                 app:layout_constraintStart_toEndOf="@+id/iv_back"
                 android:layout_marginStart="8dp"
                 android:text="username"
-                android:textSize="24dp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
                 android:fontFamily="@font/inter_bold"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -117,7 +118,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cl_avatar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Bạn chưa có bài viết nào."
+            android:text="Người dùng này chưa có bài viết nào."
             android:layout_marginTop="40dp"
             android:visibility="gone"/>
 

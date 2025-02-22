@@ -38,6 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="Chỉnh sửa thông tin"
             android:textSize="18sp"
+            android:textColor="@color/black"
             android:fontFamily="@font/inter_bold"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -105,6 +106,7 @@
             app:layout_constraintStart_toEndOf="@+id/iv_avatar"
             android:layout_marginStart="12dp"
             android:text="username"
+            android:textColor="@color/black"
             android:fontFamily="@font/inter_bold" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

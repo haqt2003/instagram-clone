@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val homeFragment = HomeFragment.newInstance()
-    private val profileFragment = ProfileFragment.newInstance()
+    private var profileFragment = ProfileFragment.newInstance()
 
     private val userViewModel: UserViewModel by lazy {
         getViewModel<UserViewModel>()
@@ -79,8 +79,10 @@ class MainActivity : AppCompatActivity() {
                     .putInt("totalPost", it.totalPost)
                     .apply()
 
-                binding.ivProfile.load(it.avatar) {
-                    error(R.drawable.no_avatar)
+                if (it.username == username) {
+                    binding.ivProfile.load(it.avatar) {
+                        error(R.drawable.no_avatar)
+                    }
                 }
             }
         }
@@ -97,6 +99,7 @@ class MainActivity : AppCompatActivity() {
             ivProfile.setOnClickListener {
                 ivHome.setImageResource(R.drawable.ic_home)
                 ivRoundProfile.visibility = View.VISIBLE
+                profileFragment = ProfileFragment.newInstance()
                 replaceFragment(profileFragment)
             }
         }

@@ -1,5 +1,7 @@
 package com.example.instagram.data.models
 
+import java.io.Serializable
+
 data class PostData(
     val _id: String,
     val author: AuthorData,
@@ -7,6 +9,6 @@ data class PostData(
     val content: String,
     val createdAt: String,
     val updatedAt: String,
-    val listLike: List<AuthorData>,
-    val totalLike: Int
-)
+    val listLike: MutableList<AuthorData>,
+    var totalLike: Int
+) : Serializable

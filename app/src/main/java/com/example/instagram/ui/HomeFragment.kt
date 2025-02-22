@@ -28,6 +28,7 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        postViewModel.getPosts(currentPage)
     }
 
     override fun onCreateView(
@@ -55,7 +56,11 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
             hasMoreData = it
         }
 
-        postViewModel.getPosts(currentPage)
+        postViewModel.likePostUpdated.observe(viewLifecycleOwner) {
+            if (it) {
+                postViewModel.getPosts(currentPage)
+            }
+        }
 
         binding.rvPosts.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -90,8 +95,8 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
                 postViewModel.likePost(
                     userId,
                     item._id,
-                    !item.listLike.any { it.username == username },
-                    AuthorData(username, "", "", Gender.MALE, "", "")
+                    item.listLike.any { it.username == username },
+                    false
                 )
             }
         }
@@ -107,11 +112,19 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
                 postViewModel.likePost(
                     userId,
                     item._id,
-                    !item.listLike.any { it.username == username },
-                    AuthorData(username, "", "", Gender.MALE, "", "")
+                    item.listLike.any { it.username == username },
+                    false
                 )
             }
         }
+    }
+
+    override fun onSeeLikeClicked(item: PostData) {
+        val listLikeFragment = ListLikeFragment.newInstance()
+        val bundle = Bundle()
+        bundle.putSerializable("postData", item)
+        listLikeFragment.arguments = bundle
+        listLikeFragment.show(childFragmentManager, "list_like")
     }
 
     override fun onMoreClicked(item: PostData) {
@@ -128,6 +141,24 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
         } else {
             Toast.makeText(requireContext(), "Bạn không phải chủ sở hữu!", Toast.LENGTH_SHORT)
                 .show()
+        }
+    }
+
+    override fun onGoToUser(item: PostData) {
+        val sharedPreferences = requireActivity().getSharedPreferences("instagram", 0)
+        val username = sharedPreferences.getString("username", "")
+
+        if (item.author.username == username) {
+            val profileFragment = ProfileFragment.newInstance()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(com.example.instagram.R.id.fcv_main, profileFragment)
+                .addToBackStack(null)
+                .commit()
+        } else {
+            val otherUserFragment = OtherUserFragment.newInstance(item.author.username)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .add(com.example.instagram.R.id.fcv_main, otherUserFragment)
+                .addToBackStack(null).commit()
         }
     }
 

@@ -29,7 +29,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="username"
-                android:textSize="24dp"
+                android:textColor="@color/black"
+                android:textSize="24sp"
                 android:fontFamily="@font/inter_bold"/>
 
             <androidx.appcompat.widget.AppCompatImageView

@@ -52,6 +52,8 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
         val pid = intent.getStringExtra("postId")
         val username = intent.getStringExtra("username")
 
+        postViewModel.getAllUserPosts(username.toString())
+
         adapter = EditPostAdapter(this)
         binding.rvPosts.adapter = adapter
         binding.rvPosts.layoutManager =
@@ -74,8 +76,6 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
         postViewModel.currentPageUserPost.observe(this) {
             currentPageUser = it
         }
-
-        postViewModel.getAllUserPosts(username.toString())
 
         binding.tvCancel.setOnClickListener {
             finish()

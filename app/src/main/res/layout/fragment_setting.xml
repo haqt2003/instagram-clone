@@ -38,6 +38,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="Cài đặt và hoạt động"
+                android:textColor="@color/black"
                 android:textSize="18sp"
                 android:fontFamily="@font/inter_bold"/>
 
@@ -64,6 +65,7 @@
             android:fontFamily="@font/inter_medium"
             android:layout_marginHorizontal="20dp"
             android:text="Chỉnh sửa thông tin cá nhân"
+            android:textColor="@color/black"
             android:textSize="16sp"/>
 
         <androidx.appcompat.widget.AppCompatTextView

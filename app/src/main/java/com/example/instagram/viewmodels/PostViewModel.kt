@@ -35,6 +35,9 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
     private val _currentPageUserPost = MutableLiveData<Int>()
     val currentPageUserPost: MutableLiveData<Int> get() = _currentPageUserPost
 
+    private val _likePostUpdated = MutableLiveData<Boolean>()
+    val likePostUpdated: LiveData<Boolean> get() = _likePostUpdated
+
     fun getPosts(pageNumber: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -100,7 +103,7 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
         }
     }
 
-    fun likePost(userId: String, postId: String, like: Boolean, authorData: AuthorData) {
+    fun likePost(userId: String, postId: String, like: Boolean, isNotHome: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 if (like) {
@@ -114,41 +117,10 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
                         )
                     )
                 }
-            }.onSuccess {
-                _posts.postValue(_posts.value?.map { post ->
-                    if (post._id == postId) {
-                        val updatedLikes = if (like) {
-                            post.listLike + authorData
-                        } else {
-                            post.listLike.filter { it.username != authorData.username }
-                        }
-                        val updatedTotalLike = if (like) {
-                            post.totalLike + 1
-                        } else {
-                            post.totalLike - 1
-                        }
-                        post.copy(listLike = updatedLikes, totalLike = updatedTotalLike)
-                    } else {
-                        post
-                    }
-                })
-                _userPosts.postValue(_userPosts.value?.map { post ->
-                    if (post._id == postId) {
-                        val updatedLikes = if (like) {
-                            post.listLike + authorData
-                        } else {
-                            post.listLike.filter { it.username != authorData.username }
-                        }
-                        val updatedTotalLike = if (like) {
-                            post.totalLike + 1
-                        } else {
-                            post.totalLike - 1
-                        }
-                        post.copy(listLike = updatedLikes, totalLike = updatedTotalLike)
-                    } else {
-                        post
-                    }
-                })
+
+                if (isNotHome) {
+                    _likePostUpdated.postValue(true)
+                }
             }
         }
     }

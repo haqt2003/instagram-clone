@@ -41,6 +41,7 @@ class LoginActivity : AppCompatActivity() {
                     .putString("username", it.username)
                     .putString("id", it._id)
                     .putString("name", it.name)
+                    .putString("avatar", it.avatar)
                     .apply()
 
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
