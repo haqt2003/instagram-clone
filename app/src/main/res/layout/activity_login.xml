@@ -101,7 +101,7 @@
                 android:text="Đăng ký"
                 android:textStyle="bold"
                 android:fontFamily="@font/inter_bold"
-                android:textColor="#438BA5"/>
+                android:textColor="@color/blue_text"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

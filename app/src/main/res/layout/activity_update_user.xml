@@ -82,7 +82,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_gravity="center_horizontal"
                 android:text="Chỉnh sửa avatar"
-                android:textColor="#576CE7"
+                android:textColor="@color/blue_text"
                 android:fontFamily="@font/inter_bold"/>
 
 

@@ -33,11 +33,7 @@ class LikeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
                 listener.onItemClicked(item)
             }
 
-            tvUsername.setOnClickListener {
-                listener.onItemClicked(item)
-            }
-
-            tvName.setOnClickListener {
+            clUser.setOnClickListener {
                 listener.onItemClicked(item)
             }
         }

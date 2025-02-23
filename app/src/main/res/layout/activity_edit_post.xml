@@ -27,7 +27,7 @@
             android:text="Hủy"
             android:textSize="16sp"
             android:fontFamily="@font/inter_medium"
-            android:textColor="#425BFF"/>
+            android:textColor="@color/blue_text"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -51,7 +51,7 @@
             android:text="Xong"
             android:textSize="16sp"
             android:fontFamily="@font/inter_medium"
-            android:textColor="#425BFF"/>
+            android:textColor="@color/blue_text"/>
 
         <ProgressBar
             android:id="@+id/pb_loading"
@@ -61,7 +61,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="gone"
-            android:indeterminateTint="#425BFF"/>
+            android:indeterminateTint="@color/blue_text"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
