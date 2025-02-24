@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.R
 import com.example.instagram.adapters.HomeAdapter
-import com.example.instagram.data.enums.Gender
-import com.example.instagram.data.models.AuthorData
 import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.FragmentDetailBinding
 import com.example.instagram.viewmodels.PostViewModel

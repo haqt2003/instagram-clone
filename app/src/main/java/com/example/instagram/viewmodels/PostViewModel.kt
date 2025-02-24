@@ -38,6 +38,9 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
     private val _likePostUpdated = MutableLiveData<Boolean>()
     val likePostUpdated: LiveData<Boolean> get() = _likePostUpdated
 
+    private val _reloadHome = MutableLiveData<Boolean>()
+    val reloadHome: LiveData<Boolean> get() = _reloadHome
+
     fun getPosts(pageNumber: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
@@ -144,5 +147,9 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
                 _userPosts.postValue(it.data?.data ?: emptyList())
             }
         }
+    }
+
+    fun setReloadHome(reload: Boolean) {
+        _reloadHome.postValue(reload)
     }
 }

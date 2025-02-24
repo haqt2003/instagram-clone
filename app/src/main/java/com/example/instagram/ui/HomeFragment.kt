@@ -1,7 +1,6 @@
 package com.example.instagram.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.instagram.adapters.HomeAdapter
-import com.example.instagram.data.enums.Gender
-import com.example.instagram.data.models.AuthorData
 import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.FragmentHomeBinding
 import com.example.instagram.viewmodels.PostViewModel
@@ -58,6 +55,14 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
 
         postViewModel.likePostUpdated.observe(viewLifecycleOwner) {
             if (it) {
+                postViewModel.getPosts(currentPage)
+            }
+        }
+
+        postViewModel.reloadHome.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.rvPosts.smoothScrollToPosition(0)
+                currentPage = 1
                 postViewModel.getPosts(currentPage)
             }
         }

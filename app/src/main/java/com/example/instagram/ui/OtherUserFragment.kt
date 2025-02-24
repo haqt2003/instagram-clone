@@ -46,7 +46,7 @@ class OtherUserFragment : Fragment(), ProfileAdapter.OnClickListener {
     ): View {
         binding = FragmentOtherUserBinding.inflate(inflater, container, false)
 
-//        val preUsername = arguments?.getString("preUsername")
+        val preUsername = arguments?.getString("preUsername")
 
         adapter = ProfileAdapter(this)
 
@@ -68,8 +68,7 @@ class OtherUserFragment : Fragment(), ProfileAdapter.OnClickListener {
             })
 
             ivBack.setOnClickListener {
-//                postViewModel.getUserPosts(preUsername.toString(), 1, 10)
-//                userViewModel.getUser(preUsername.toString())
+                postViewModel.getUserPosts(preUsername.toString(), 1, 10)
                 requireActivity().supportFragmentManager.popBackStack()
             }
 
@@ -123,7 +122,8 @@ class OtherUserFragment : Fragment(), ProfileAdapter.OnClickListener {
 
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fcv_main, detailFragment)
-            .addToBackStack(null).commit()
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun loadNextPage() {

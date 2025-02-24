@@ -2,7 +2,6 @@ package com.example.instagram.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast

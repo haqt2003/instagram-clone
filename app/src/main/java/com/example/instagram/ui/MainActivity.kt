@@ -90,8 +90,12 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             ivHome.setOnClickListener {
                 ivHome.setImageResource(R.drawable.ic_home_active)
-                replaceFragment(homeFragment)
                 ivRoundProfile.visibility = View.INVISIBLE
+                if (supportFragmentManager.findFragmentById(R.id.fcv_main) !is HomeFragment) {
+                    replaceFragment(homeFragment)
+                } else {
+                    postViewModel.setReloadHome(true)
+                }
             }
             ivAdd.setOnClickListener {
                 selectImages()
