@@ -1,16 +1,15 @@
 package com.example.instagram.ui
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.instagram.R
 import com.example.instagram.databinding.ActivityLanguageBinding
 import com.example.instagram.utils.changeLanguage
-import java.util.Locale
 
 class LanguageActivity : AppCompatActivity() {
     private val binding: ActivityLanguageBinding by lazy {

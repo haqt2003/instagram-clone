@@ -61,6 +61,10 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
             tvTitle.text = item.content.trim()
             tvDate.text = formatDate(binding.root.context, item.createdAt)
 
+            ivAvatar.setOnClickListener {
+                listener.onGoToUser(item)
+            }
+
             tvName.setOnClickListener {
                 listener.onGoToUser(item)
             }

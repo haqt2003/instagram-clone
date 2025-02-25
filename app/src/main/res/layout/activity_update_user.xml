@@ -252,7 +252,8 @@
                        android:gravity="start"
                         android:textSize="16sp"
                         android:background="@null"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine"
+                        android:textColor="@color/black"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

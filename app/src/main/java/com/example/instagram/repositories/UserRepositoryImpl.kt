@@ -1,7 +1,6 @@
 package com.example.instagram.repositories
 
 import android.content.Context
-import com.example.instagram.data.models.request.UpdateUserRequest
 import com.example.instagram.data.models.response.ApiResponse
 import com.example.instagram.data.models.response.GetUserResponse
 import com.example.instagram.data.models.response.UpdateUserResponse
@@ -28,9 +27,4 @@ class UserRepositoryImpl(private val context: Context) : UserRepository {
     ): ApiResponse<UpdateUserResponse> {
         return userApiService.updateUser(userId, oldPassword, newPassword, name, avatar, gender, address, introduce)
     }
-
-//    override suspend fun updateUserBody(updateUserRequest: UpdateUserRequest): ApiResponse<UpdateUserResponse> {
-//        return userApiService.updateUser(updateUserRequest)
-//    }
-
 }

@@ -1,12 +1,10 @@
 package com.example.instagram.repositories
 
-import com.example.instagram.data.models.request.UpdateUserRequest
 import com.example.instagram.data.models.response.ApiResponse
 import com.example.instagram.data.models.response.GetUserResponse
 import com.example.instagram.data.models.response.UpdateUserResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -16,9 +14,6 @@ import retrofit2.http.Path
 interface UserRepository {
     @GET("user/{username}")
     suspend fun getUser(@Path("username") username: String): ApiResponse<GetUserResponse>
-
-//    @PATCH("user")
-//    suspend fun updateUserBody(@Body updateUserRequest: UpdateUserRequest): ApiResponse<UpdateUserResponse>
 
     @Multipart
     @PATCH("user")
