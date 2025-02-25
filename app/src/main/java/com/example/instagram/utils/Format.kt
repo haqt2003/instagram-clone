@@ -15,27 +15,11 @@ fun formatDate(context: Context, dateTimeString: String): String {
     val date = inputFormat.parse(dateTimeString) ?: return context.getString(R.string.undefined)
 
     return if (language == "en") {
-        val outputFormat = SimpleDateFormat("MMMM, yyyy", Locale.ENGLISH)
-        val calendar = Calendar.getInstance()
-        calendar.time = date
-
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val monthYear = outputFormat.format(date)
-        val dayWithSuffix = "$day${getDaySuffix(day)}"
-
-        "$dayWithSuffix $monthYear"
+        val outputFormat = SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH)
+        outputFormat.format(date)
     } else {
         val outputFormat = SimpleDateFormat("d 'tháng' M, yyyy", Locale.getDefault())
         "ngày ${outputFormat.format(date)}"
     }
 }
 
-private fun getDaySuffix(day: Int): String {
-    return when {
-        day in 11..13 -> "th"
-        day % 10 == 1 -> "st"
-        day % 10 == 2 -> "nd"
-        day % 10 == 3 -> "rd"
-        else -> "th"
-    }
-}

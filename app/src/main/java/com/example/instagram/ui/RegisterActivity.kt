@@ -18,6 +18,7 @@ class RegisterActivity : AppCompatActivity() {
         ActivityRegisterBinding.inflate(layoutInflater)
     }
     private val authViewModel: AuthViewModel by viewModel()
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,6 @@ class RegisterActivity : AppCompatActivity() {
                 binding.etName.text?.clear()
                 binding.etUsername.text?.clear()
                 binding.etPassword.text?.clear()
-                binding.btRegister.text = getString(R.string.sign_up)
             }
             binding.btRegister.isEnabled = true
             binding.btRegister.text = getString(R.string.sign_up)
@@ -54,6 +54,8 @@ class RegisterActivity : AppCompatActivity() {
                 val username = etUsername.text.toString()
                 val password = etPassword.text.toString()
                 if (name.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()) {
+                    btRegister.isEnabled = false
+                    btRegister.text = "${getString(R.string.sign_up)}..."
                     authViewModel.signup(name, username, password)
                 } else {
                     Toast.makeText(
@@ -61,9 +63,9 @@ class RegisterActivity : AppCompatActivity() {
                         getString(R.string.enter_info),
                         Toast.LENGTH_SHORT
                     ).show()
+                    btRegister.isEnabled = true
+                    btRegister.text = getString(R.string.sign_up)
                 }
-                btRegister.isEnabled = false
-                btRegister.text = "${getString(R.string.sign_up)}..."
             }
 
             tvLogin.setOnClickListener {

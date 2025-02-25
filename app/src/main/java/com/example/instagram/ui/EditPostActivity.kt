@@ -106,7 +106,7 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
                         postViewModel.editPost(userId, postId, imagesPath, content)
                         postViewModel.msg.observe(this@EditPostActivity) { message ->
                             val intent = Intent(this@EditPostActivity, MainActivity::class.java)
-                            if (message == "Cập nhật bài viết thành công!") {
+                            if (message == "Sửa bài viết thành công!") {
                                 intent.putExtra("msg", getString(R.string.update_success))
                             } else {
                                 intent.putExtra("msg", message)
