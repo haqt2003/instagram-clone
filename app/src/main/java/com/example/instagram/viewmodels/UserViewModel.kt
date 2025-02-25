@@ -1,11 +1,9 @@
 package com.example.instagram.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.instagram.data.models.response.GetUserResponse
-import com.example.instagram.data.models.response.UpdateUserResponse
 import com.example.instagram.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

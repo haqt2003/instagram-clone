@@ -142,7 +142,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/black"
                         android:fontFamily="@font/inter_medium"
-                        android:paddingEnd="12dp"
+                        android:paddingEnd="24dp"
                         android:paddingStart="0dp"
                         android:maxLines="2"
                         android:ellipsize="end"
