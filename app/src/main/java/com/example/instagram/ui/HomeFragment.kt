@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.instagram.R
 import com.example.instagram.adapters.HomeAdapter
 import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.FragmentHomeBinding
@@ -144,7 +145,7 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
             )
             moreBottomSheetFragment.show(childFragmentManager, "more_bottom_sheet")
         } else {
-            Toast.makeText(requireContext(), "Bạn không phải chủ sở hữu!", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), getString(R.string.not_owner), Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -156,13 +157,13 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
         if (item.author.username == username) {
             val profileFragment = ProfileFragment.newInstance()
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(com.example.instagram.R.id.fcv_main, profileFragment)
+                .replace(R.id.fcv_main, profileFragment)
                 .addToBackStack(null)
                 .commit()
         } else {
             val otherUserFragment = OtherUserFragment.newInstance(item.author.username)
             requireActivity().supportFragmentManager.beginTransaction()
-                .add(com.example.instagram.R.id.fcv_main, otherUserFragment)
+                .add(R.id.fcv_main, otherUserFragment)
                 .addToBackStack(null).commit()
         }
     }

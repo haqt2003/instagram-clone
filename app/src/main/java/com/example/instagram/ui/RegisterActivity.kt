@@ -1,5 +1,6 @@
 package com.example.instagram.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -17,6 +18,7 @@ class RegisterActivity : AppCompatActivity() {
         ActivityRegisterBinding.inflate(layoutInflater)
     }
     private val authViewModel: AuthViewModel by viewModel()
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,7 +30,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         authViewModel.authMsg.observe(this) {
-            if (it != null) {
+            if (it == "Tạo tài khoản thành công!") {
                 Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtra("username", binding.etUsername.text.toString())
@@ -36,13 +38,14 @@ class RegisterActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, "Có lỗi!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
                 binding.etName.text?.clear()
                 binding.etUsername.text?.clear()
                 binding.etPassword.text?.clear()
+                binding.btRegister.text = getString(R.string.sign_up)
             }
             binding.btRegister.isEnabled = true
-            binding.btRegister.text = "Đăng ký"
+            binding.btRegister.text = getString(R.string.sign_up)
         }
 
         with(binding) {
@@ -55,12 +58,12 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(
                         this@RegisterActivity,
-                        "Vui lòng nhập đầy đủ thông tin",
+                        getString(R.string.enter_info),
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 btRegister.isEnabled = false
-                btRegister.text = "Đăng ký..."
+                btRegister.text = "${getString(R.string.sign_up)}..."
             }
 
             tvLogin.setOnClickListener {

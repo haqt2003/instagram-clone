@@ -1,5 +1,6 @@
 package com.example.instagram.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -21,6 +22,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         getViewModel<UserViewModel>()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,10 +34,14 @@ class ChangePasswordActivity : AppCompatActivity() {
         }
 
         userViewModel.updateMsg.observe(this) {
-            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            if (it == "Cập nhật thành công!") {
+                Toast.makeText(this, getString(R.string.update_success), Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            }
             binding.etOldPassword.text?.clear()
             binding.etNewPassword.text?.clear()
-            binding.btSave.text = "Đổi mật khẩu"
+            binding.btSave.text = getString(R.string.change_password)
         }
 
         binding.ivBack.setOnClickListener {
@@ -65,7 +71,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                     newPassword
                 )
 
-                binding.btSave.text = "Đổi mật khẩu..."
+                binding.btSave.text = getString(R.string.change_password)
                 userViewModel.updateUser(
                     userId,
                     old_password,
@@ -77,7 +83,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                     null
                 )
             } else {
-                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.enter_info), Toast.LENGTH_SHORT).show()
             }
         }
     }

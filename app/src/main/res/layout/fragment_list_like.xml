@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
-        android:text="Lượt thích"
+        android:text="@string/like_count"
         android:textSize="16sp"
         android:fontFamily="@font/inter_bold"/>
 
@@ -48,7 +48,7 @@
             app:layout_constraintStart_toEndOf="@+id/iv_search"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="8dp"
-            android:hint="Tìm kiếm"
+            android:hint="@string/search"
             android:textColor="#757881"
             android:maxLines="1"
             android:background="@null" />

@@ -106,7 +106,11 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
                         postViewModel.editPost(userId, postId, imagesPath, content)
                         postViewModel.msg.observe(this@EditPostActivity) { message ->
                             val intent = Intent(this@EditPostActivity, MainActivity::class.java)
-                            intent.putExtra("msg", message)
+                            if (message == "Cập nhật bài viết thành công!") {
+                                intent.putExtra("msg", getString(R.string.update_success))
+                            } else {
+                                intent.putExtra("msg", message)
+                            }
                             startActivity(intent)
                             finish()
                         }
@@ -124,7 +128,7 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
             images.remove(item)
             adapter.submitData(images)
         } else if (images.size == 1) {
-            Toast.makeText(this, "Bạn phải có ít nhất 1 ảnh!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.at_least_1_img), Toast.LENGTH_SHORT).show()
         }
     }
 

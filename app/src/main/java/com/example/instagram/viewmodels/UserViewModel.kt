@@ -1,5 +1,6 @@
 package com.example.instagram.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -56,6 +57,8 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
             }.onSuccess {
                 _updateUser.postValue(it.data)
                 _updateMsg.postValue(it.message ?: "Cập nhật thành công!")
+                Log.d("UserViewModelCCC", updateUser.value.toString())
+                it.data?.let { it1 -> Log.d("UserViewModelCCC", it1._id) }
             }
         }
     }

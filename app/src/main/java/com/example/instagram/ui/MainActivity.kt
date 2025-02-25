@@ -1,5 +1,6 @@
 package com.example.instagram.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -17,6 +18,7 @@ import com.example.instagram.databinding.ActivityMainBinding
 import com.example.instagram.viewmodels.PostViewModel
 import com.example.instagram.viewmodels.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -50,6 +52,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        setLanguage()
 
         if (savedInstanceState == null) {
             replaceFragment(homeFragment)
@@ -117,5 +121,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun selectImages() {
         pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private fun setLanguage() {
+        val sharedPreferences = getSharedPreferences("instagram_config", Context.MODE_PRIVATE)
+        val languageCode = sharedPreferences.getString("language", "vi") ?: "vi"
+
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+
+        val config = resources.configuration
+        config.setLocale(locale)
+
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

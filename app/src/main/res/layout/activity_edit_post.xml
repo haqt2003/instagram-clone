@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="Hủy"
+            android:text="@string/cancel"
             android:textSize="16sp"
             android:fontFamily="@font/inter_medium"
             android:textColor="@color/blue_text"/>
@@ -36,7 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Chỉnh sửa thông tin"
+            android:text="@string/edit_post"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:fontFamily="@font/inter_bold"/>
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Xong"
+            android:text="@string/confirm"
             android:textSize="16sp"
             android:fontFamily="@font/inter_medium"
             android:textColor="@color/blue_text"/>
@@ -130,7 +130,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="28dp"
-        android:hint="Thêm chú thích..."
+        android:hint="@string/add_caption"
         android:background="@null"
         android:textColor="@color/black"
         android:inputType="textMultiLine"

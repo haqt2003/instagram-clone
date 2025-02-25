@@ -94,7 +94,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_posts_count"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="bài viết"
+                    android:text="@string/posts"
                     android:textColor="@color/black" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -118,7 +118,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cl_avatar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Người dùng này chưa có bài viết nào."
+            android:text="@string/user_not_have_post"
             android:layout_marginTop="40dp"
             android:visibility="gone"/>
 

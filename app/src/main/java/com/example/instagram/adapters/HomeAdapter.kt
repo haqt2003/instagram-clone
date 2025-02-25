@@ -59,7 +59,7 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
             tvLikeCount.text = item.totalLike.toString()
             tvNameTitle.text = item.author.username
             tvTitle.text = item.content.trim()
-            tvDate.text =  formatDate(item.updatedAt)
+            tvDate.text = formatDate(binding.root.context, item.createdAt)
 
             tvName.setOnClickListener {
                 listener.onGoToUser(item)

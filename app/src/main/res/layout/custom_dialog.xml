@@ -11,7 +11,7 @@
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Xoá bài viết?"
+        android:text="@string/delete_post"
         android:layout_marginHorizontal="28dp"
         android:layout_marginTop="28dp"
         android:textSize="20sp"
@@ -25,7 +25,7 @@
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bạn chắc chắn muốn xoá bài viết? Bài viết này sẽ bị xoá vĩnh viễn"
+        android:text="@string/delete_post_desc"
         android:textSize="16sp"
         android:textColor="#444444"
         android:layout_marginHorizontal="28dp"
@@ -55,8 +55,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Xoá"
-            android:textSize="16dp"
+            android:text="@string/delete"
+            android:textSize="16sp"
             android:textColor="#FF1A12"
             android:fontFamily="@font/inter_bold" />
 
@@ -83,8 +83,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Hủy"
-            android:textSize="16dp"
+            android:text="@string/cancel"
+            android:textSize="16sp"
             android:textColor="@color/black"
             android:fontFamily="@font/inter_medium" />
 

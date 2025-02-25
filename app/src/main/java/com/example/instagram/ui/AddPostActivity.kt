@@ -1,5 +1,6 @@
 package com.example.instagram.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -31,6 +32,7 @@ class AddPostActivity : AppCompatActivity() {
         getViewModel<PostViewModel>()
     }
     private lateinit var adapter: AddPostAdapter
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -62,21 +64,25 @@ class AddPostActivity : AppCompatActivity() {
                     intent.getStringArrayListExtra("uris")?.map { Uri.parse(it) } ?: emptyList()
                 val imageParts = prepareImageParts(imagesUri)
                 if (imageParts.isEmpty()) {
-                    Toast.makeText(this, "Ảnh không đúng định dạng!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.incorrect_format), Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 } else {
                     binding.btPost.isEnabled = false
-                    binding.btPost.text = "Chia sẻ..."
+                    binding.btPost.text = "${getString(R.string.share)}..."
                     postViewModel.addPost(userId, imageParts, content)
                     postViewModel.msg.observe(this) { message ->
                         val intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra("msg", message)
+                        if (message == "Thêm bài viết thành công!") {
+                            intent.putExtra("msg", getString(R.string.add_success))
+                        } else {
+                            intent.putExtra("msg", message)
+                        }
                         startActivity(intent)
                         finish()
                     }
                 }
             } else {
-                Toast.makeText(this, "Vui lòng nhập nội dung!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.input_content), Toast.LENGTH_SHORT).show()
             }
         }
 

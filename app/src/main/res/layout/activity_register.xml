@@ -37,7 +37,7 @@
             android:background="@drawable/custom_edittext"
             android:textSize="14sp"
             android:textColor="@color/black"
-            android:hint="Họ và tên" />
+            android:hint="@string/name" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_username"
@@ -51,7 +51,7 @@
             android:background="@drawable/custom_edittext"
             android:textSize="14sp"
             android:textColor="@color/black"
-            android:hint="Tên đăng nhập" />
+            android:hint="@string/username" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_password"
@@ -64,7 +64,7 @@
             android:paddingEnd="32dp"
             android:background="@drawable/custom_edittext"
             android:textSize="14sp"
-            android:hint="Mật khẩu"
+            android:hint="@string/password"
             android:textColor="@color/black"
             android:inputType="textPassword"/>
 
@@ -86,7 +86,7 @@
             android:layout_marginTop="24dp"
             android:paddingVertical="16dp"
             android:background="@drawable/custom_button"
-            android:text="Đăng ký"
+            android:text="@string/sign_up"
             android:textSize="14sp"
             android:textColor="@color/white"
             android:textStyle="bold"
@@ -104,7 +104,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn đã có tài khoản."
+                android:text="@string/already_have_account"
                 android:textColor="@color/black"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="Đăng nhập"
+                android:text="@string/sign_in"
                 android:textStyle="bold"
                 android:fontFamily="@font/inter_bold"
                 android:textColor="@color/blue_text"/>

@@ -93,7 +93,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:text="--"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/inter_bold"/>
 
@@ -103,7 +103,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_posts_count"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:text="bài viết"
+                    android:text="@string/posts"
                     android:textColor="@color/black" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -127,7 +127,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cl_avatar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Bạn chưa có bài viết nào."
+            android:text="@string/not_have_post"
             android:layout_marginTop="40dp"
             android:visibility="gone"/>
 

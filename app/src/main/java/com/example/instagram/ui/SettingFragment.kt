@@ -1,5 +1,6 @@
 package com.example.instagram.ui
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -10,12 +11,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.instagram.R
 import com.example.instagram.databinding.CustomDialogBinding
 import com.example.instagram.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -39,6 +40,11 @@ class SettingFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.tvLanguage.setOnClickListener {
+            val intent = Intent(requireContext(), LanguageActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 
@@ -48,6 +54,7 @@ class SettingFragment : Fragment() {
             SettingFragment()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showDialog() {
         val dialog = Dialog(requireContext())
         val dialogBinding = CustomDialogBinding.inflate(layoutInflater)
@@ -55,9 +62,9 @@ class SettingFragment : Fragment() {
 
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialogBinding.tvTitle.text = "Đăng xuất khỏi tài khoản của bạn?"
+        dialogBinding.tvTitle.text = getString(R.string.sign_out_title)
         dialogBinding.tvContent.visibility = View.GONE
-        dialogBinding.tvConfirm.text = "Đăng xuất"
+        dialogBinding.tvConfirm.text = getString(R.string.sign_out)
 
         dialogBinding.clCancel.setOnClickListener {
             dialog.dismiss()

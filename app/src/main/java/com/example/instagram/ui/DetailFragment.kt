@@ -187,7 +187,7 @@ class DetailFragment : Fragment(), HomeAdapter.OnClickListener {
             )
             moreBottomSheetFragment.show(childFragmentManager, "more_bottom_sheet")
         } else {
-            Toast.makeText(requireContext(), "Bạn không phải chủ sở hữu!", Toast.LENGTH_SHORT)
+            Toast.makeText(requireContext(), getString(R.string.not_owner), Toast.LENGTH_SHORT)
                 .show()
         }
     }

@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_change_password"
+    android:id="@+id/cl_language"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.UpdateUserActivity">
+    tools:context=".ui.LanguageActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_header"
@@ -34,7 +34,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/change_password"
+            android:text="@string/language"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:fontFamily="@font/inter_bold"/>
@@ -51,77 +51,40 @@
         android:layout_marginTop="12dp"
         android:background="#DBDBDB"/>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/v_divider"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginHorizontal="12dp"
-                android:orientation="vertical">
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toTopOf="@+id/v_divider"
+       android:layout_marginTop="18dp"
+       android:layout_marginHorizontal="12dp">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="10"
-                    android:orientation="horizontal">
+       <RadioGroup
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:orientation="vertical"
+           app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintStart_toStartOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="5"
-                        android:text="@string/old_password"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/inter_medium"/>
+           <androidx.appcompat.widget.AppCompatRadioButton
+               android:id="@+id/rb_english"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="English"
+               android:textSize="16sp"
+               android:fontFamily="@font/inter_regular" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_old_password"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="16dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="5"
-                        android:hint="@string/old_password"
-                        android:background="@null"
-                        android:inputType="textPassword"
-                        android:textSize="16sp"
-                        android:textColor="@color/black" />
+           <androidx.appcompat.widget.AppCompatRadioButton
+               android:id="@+id/rb_vietnamese"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Tiếng Việt"
+               android:textSize="16sp"
+               android:fontFamily="@font/inter_regular"
+               android:layout_marginTop="10dp"/>
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="10"
-                    android:orientation="horizontal">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="5"
-                        android:text="@string/new_password"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:fontFamily="@font/inter_medium"/>
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_new_password"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="16dp"
-                        android:layout_marginStart="24dp"
-                        android:layout_weight="5"
-                        android:hint="@string/new_password"
-                        android:inputType="textPassword"
-                        android:background="@null"
-                        android:textSize="16sp"
-                        android:textColor="@color/black" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
+       </RadioGroup>
+       
+   </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -175,10 +138,13 @@
                 android:layout_marginStart="16dp"
                 android:elevation="0dp"
                 android:background="@drawable/custom_button_add"
-                android:text="@string/change_password"
+                android:text="@string/confirm"
                 android:fontFamily="@font/inter_bold"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

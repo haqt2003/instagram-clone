@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             binding.btLogin.isEnabled = true
-            binding.btLogin.text = "Đăng nhập"
+            binding.btLogin.text = getString(R.string.sign_in)
         }
 
         authViewModel.authMsg.observe(this) {
@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
 
             btLogin.setOnClickListener {
                 btLogin.isEnabled = false
-                btLogin.text = "Đăng nhập..."
+                btLogin.text = "${getString(R.string.sign_in)}..."
                 authViewModel.login(etUsername.text.toString(), etPassword.text.toString())
             }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.instagram.R
 import com.example.instagram.data.enums.LikeValue
 import com.example.instagram.data.enums.Sort
 import com.example.instagram.data.models.AuthorData

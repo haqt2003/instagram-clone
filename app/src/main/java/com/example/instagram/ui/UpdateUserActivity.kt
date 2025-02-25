@@ -1,5 +1,6 @@
 package com.example.instagram.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -47,6 +48,7 @@ class UpdateUserActivity : AppCompatActivity() {
             }
         }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -120,7 +122,7 @@ class UpdateUserActivity : AppCompatActivity() {
                 val avatarUri = binding.ivAvatar.tag as? Uri
                 val avatarPart = prepareImageFilePart("avatar", avatarUri)
 
-                btSave.text = "Lưu thông tin..."
+                btSave.text = "${getString(R.string.save_info)}..."
 
                 userViewModel.updateUser(
                     userId,

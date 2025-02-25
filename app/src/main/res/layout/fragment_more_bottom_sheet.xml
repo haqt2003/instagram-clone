@@ -44,7 +44,7 @@
                 app:layout_constraintStart_toEndOf="@id/iv_edit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="16dp"
-                android:text="Chỉnh sửa"
+                android:text="@string/edit"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:fontFamily="@font/inter_medium"/>
@@ -86,7 +86,7 @@
                 app:layout_constraintStart_toEndOf="@id/iv_delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginStart="16dp"
-                android:text="Xoá"
+                android:text="@string/delete"
                 android:textSize="16sp"
                 android:textColor="#E21116"
                 android:fontFamily="@font/inter_medium"/>
