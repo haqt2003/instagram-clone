@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,14 @@ import android.view.ViewGroup
 import com.example.instagram.R
 import com.example.instagram.databinding.CustomDialogBinding
 import com.example.instagram.databinding.FragmentSettingBinding
+import com.example.instagram.viewmodels.UserViewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
+    private val userViewModel: UserViewModel by lazy {
+        requireActivity().getViewModel<UserViewModel>()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -25,6 +31,8 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val sharedPreferences = requireActivity().getSharedPreferences("instagram", 0)
+        val username = sharedPreferences.getString("username", "")
         binding = FragmentSettingBinding.inflate(inflater, container, false)
 
         binding.tvLogout.setOnClickListener {
@@ -32,6 +40,7 @@ class SettingFragment : Fragment() {
         }
 
         binding.ivBack.setOnClickListener {
+            userViewModel.getUser(username.toString())
             requireActivity().supportFragmentManager.popBackStack()
         }
 

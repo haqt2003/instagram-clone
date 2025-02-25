@@ -16,9 +16,6 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _user = MutableLiveData<GetUserResponse?>()
     val user: MutableLiveData<GetUserResponse?> get() = _user
 
-    private val _updateUser = MutableLiveData<UpdateUserResponse?>()
-    val updateUser: MutableLiveData<UpdateUserResponse?> get() = _updateUser
-
     private val _updateMsg = MutableLiveData<String?>()
     val updateMsg: MutableLiveData<String?> get() = _updateMsg
 
@@ -55,10 +52,7 @@ class UserViewModel(private val userRepository: UserRepository) : ViewModel() {
                     introduce
                 )
             }.onSuccess {
-                _updateUser.postValue(it.data)
                 _updateMsg.postValue(it.message ?: "Cập nhật thành công!")
-                Log.d("UserViewModelCCC", updateUser.value.toString())
-                it.data?.let { it1 -> Log.d("UserViewModelCCC", it1._id) }
             }
         }
     }

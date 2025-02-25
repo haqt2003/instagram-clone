@@ -101,12 +101,6 @@ class ProfileFragment : Fragment(), ProfileAdapter.OnClickListener {
             }
         }
 
-        userViewModel.updateUser.observe(viewLifecycleOwner) {
-            if (it != null) {
-                userViewModel.getUser(it.username)
-            }
-        }
-
         postViewModel.userPosts.observe(viewLifecycleOwner) {
             if (it.isNullOrEmpty()) {
                 binding.tvNone.visibility = View.VISIBLE

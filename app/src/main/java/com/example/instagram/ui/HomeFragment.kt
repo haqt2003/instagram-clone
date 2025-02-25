@@ -13,12 +13,16 @@ import com.example.instagram.adapters.HomeAdapter
 import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.FragmentHomeBinding
 import com.example.instagram.viewmodels.PostViewModel
+import com.example.instagram.viewmodels.UserViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
     private lateinit var binding: FragmentHomeBinding
     private val postViewModel: PostViewModel by lazy {
         requireActivity().getViewModel<PostViewModel>()
+    }
+    private val userViewModel: UserViewModel by lazy {
+        requireActivity().getViewModel<UserViewModel>()
     }
     private lateinit var adapter: HomeAdapter
     private var currentPage = 1
@@ -38,6 +42,14 @@ class HomeFragment : Fragment(), HomeAdapter.OnClickListener {
         adapter = HomeAdapter(this)
         binding.rvPosts.adapter = adapter
         binding.rvPosts.layoutManager = LinearLayoutManager(requireContext())
+
+        userViewModel.user.observe(viewLifecycleOwner) {
+            if (it != null) {
+                adapter.submitData(emptyList())
+                currentPage = 1
+                postViewModel.getPosts(currentPage)
+            }
+        }
 
         postViewModel.posts.observe(viewLifecycleOwner) {
             adapter.submitData(it)
