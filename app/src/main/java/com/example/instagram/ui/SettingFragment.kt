@@ -53,6 +53,11 @@ class SettingFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.tvTheme.setOnClickListener {
+            val intent = Intent(requireContext(), ThemeActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 

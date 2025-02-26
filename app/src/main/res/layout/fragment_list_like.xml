@@ -4,14 +4,14 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/bottom_sheet"
+    style="@style/BottomSheet"
     android:padding="20dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="48dp"
         android:layout_height="3dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_line"/>
+        style="@style/ImageLine"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
@@ -20,6 +20,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/like_count"
         android:textSize="16sp"
+        style="@style/TextColor"
         android:fontFamily="@font/inter_bold"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout

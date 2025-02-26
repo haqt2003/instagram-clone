@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    implementation (libs.readmore.textview)
+
     implementation(libs.coil)
     implementation (libs.circleindicator)
 

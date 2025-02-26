@@ -7,4 +7,30 @@
     </style>
 
     <style name="Theme.Instagram" parent="Base.Theme.Instagram" />
+    <style name="TextColor"><item name="android:textColor">@color/black</item></style>
+    <style name="TextColorLogin"><item name="android:textColor">#444444</item></style>
+    <style name="TextColorDialog"><item name="android:textColor">#444444</item></style>
+    <style name="TextSecondaryColor"><item name="android:textColor">@color/text_secondary</item></style>
+    <style name="BackgroundColor"><item name="android:background">@color/white</item></style>
+    <style name="BackgroundColorDivider"><item name="android:background">#DBDBDB</item></style>
+    <style name="BackgroundColorDividerDialog"><item name="android:background">#DBDBDB</item></style>
+    <style name="BackgroundColorDividerWrapper"><item name="android:background">#DBDBDB</item></style>
+    <style name="BackgroundBottomColor"><item name="android:background">@color/white</item></style>
+    <style name="ImageRoundAvatar"><item name="android:src">@drawable/ic_round</item></style>
+    <style name="BottomSheet"><item name="android:src">@drawable/bottom_sheet</item></style>
+    <style name="ImageHome"><item name="android:src">@drawable/ic_home</item></style>
+    <style name="ImageHomeActive"><item name="android:src">@drawable/ic_home_active</item></style>
+    <style name="ImageAdd"><item name="android:src">@drawable/ic_add</item></style>
+    <style name="ImageLogo"><item name="android:src">@drawable/logo_text</item></style>
+    <style name="ImageBack"><item name="android:src">@drawable/ic_back</item></style>
+    <style name="ButtonCancel"><item name="android:background">@drawable/custom_button_cancel</item></style>
+    <style name="ImageMore"><item name="android:src">@drawable/ic_more</item></style>
+    <style name="ImageLike"><item name="android:src">@drawable/ic_unlike</item></style>
+    <style name="ImageLine"><item name="android:src">@drawable/ic_line</item></style>
+    <style name="ImageMenu"><item name="android:src">@drawable/ic_menu</item></style>
+    <style name="DialogBackground"><item name="android:background">@drawable/dialog_background</item></style>
+    <style name="DialogBackgroundButton"><item name="android:background">@drawable/custom_background_dialog</item></style>
+    <style name="WrapperMore"><item name="android:background">@drawable/wrapper_more</item></style>
+    <style name="ImageEdit"><item name="android:src">@drawable/ic_edit</item></style>
+    <style name="EditText"><item name="android:background">@drawable/custom_edittext</item></style>
 </resources>

@@ -1,7 +1,9 @@
 package com.example.instagram.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -94,7 +97,12 @@ class MainActivity : AppCompatActivity() {
 
         with(binding) {
             ivHome.setOnClickListener {
-                ivHome.setImageResource(R.drawable.ic_home_active)
+                val isDarkMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+                if (isDarkMode) {
+                    ivHome.setImageResource(R.drawable.ic_home_active_dark)
+                } else {
+                    ivHome.setImageResource(R.drawable.ic_home_active)
+                }
                 ivRoundProfile.visibility = View.INVISIBLE
                 if (supportFragmentManager.findFragmentById(R.id.fcv_main) !is HomeFragment) {
                     replaceFragment(homeFragment)
@@ -102,11 +110,17 @@ class MainActivity : AppCompatActivity() {
                     postViewModel.setReloadHome(true)
                 }
             }
+
             ivAdd.setOnClickListener {
                 selectImages()
             }
             ivProfile.setOnClickListener {
-                ivHome.setImageResource(R.drawable.ic_home)
+                val isDarkMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+                if (isDarkMode) {
+                    ivHome.setImageResource(R.drawable.ic_home_dark)
+                } else {
+                    ivHome.setImageResource(R.drawable.ic_home)
+                }
                 ivRoundProfile.visibility = View.VISIBLE
                 profileFragment = ProfileFragment.newInstance()
                 replaceFragment(profileFragment)

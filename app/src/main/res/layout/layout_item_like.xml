@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    style="@style/BackgroundColor"
     android:layout_marginTop="16dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,6 +40,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="username"
                 android:textSize="14sp"
+                style="@style/TextColor"
                 android:fontFamily="@font/inter_bold"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -50,7 +51,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:text="@string/name"
-                android:textColor="#7A7A7C"/>
+                style="@style/TextSecondaryColor"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

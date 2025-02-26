@@ -1,10 +1,12 @@
 package com.example.instagram.adapters
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import coil.load
+import com.colormoon.readmoretextview.ReadMoreTextView
 import com.example.instagram.R
 import com.example.instagram.data.enums.Gender
 import com.example.instagram.data.models.AuthorData
@@ -12,13 +14,14 @@ import com.example.instagram.data.models.PostData
 import com.example.instagram.databinding.LayoutItemLinearBinding
 import com.example.instagram.utils.formatDate
 
-class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<LayoutItemLinearBinding, PostData>(), ImageAdapter.OnClickImageListener{
+class HomeAdapter(private val listener: OnClickListener) :
+    BaseRecyclerView<LayoutItemLinearBinding, PostData>(), ImageAdapter.OnClickImageListener {
 
     override fun getItemLayout(
         inflater: LayoutInflater,
         parent: ViewGroup
     ): LayoutItemLinearBinding {
-       return LayoutItemLinearBinding.inflate(inflater, parent, false)
+        return LayoutItemLinearBinding.inflate(inflater, parent, false)
     }
 
     override fun areContentsTheSame(oldItem: PostData, newItem: PostData): Boolean {
@@ -38,6 +41,8 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
         val name = sharedPreferences.getString("name", "")
         val avatar = sharedPreferences.getString("avatar", "")
 
+        val isDarkMode = (binding.root.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+
         with(binding) {
             if (item.author.avatar == "") {
                 ivAvatar.setImageResource(R.drawable.no_avatar)
@@ -48,17 +53,27 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
                 }
             }
             vpContent.isNestedScrollingEnabled = false
-            vpContent.adapter = ImageAdapter(item.images, item, this@HomeAdapter, ivLike, tvLikeCount)
+            vpContent.adapter =
+                ImageAdapter(item.images, item, this@HomeAdapter, ivLike, tvLikeCount)
             ciIndi.setViewPager(vpContent)
             if (item.listLike.any { it.username == username.toString() }) {
                 ivLike.setImageResource(R.drawable.ic_liked)
             } else {
-                ivLike.setImageResource(R.drawable.ic_unlike)
+                if (isDarkMode) {
+                    ivLike.setImageResource(R.drawable.ic_unlike_dark)
+                } else {
+                    ivLike.setImageResource(R.drawable.ic_unlike)
+                }
             }
             tvName.text = item.author.username
             tvLikeCount.text = item.totalLike.toString()
             tvNameTitle.text = item.author.username
             tvTitle.text = item.content.trim()
+            tvTitle.setCollapsedText(binding.root.context.getString(R.string.read_more))
+            tvTitle.setExpandedText(binding.root.context.getString(R.string.read_less))
+            tvTitle.setCollapsedTextColor(R.color.text_secondary)
+            tvTitle.setExpandedTextColor(R.color.text_secondary)
+            tvTitle.setTrimLines(2)
             tvDate.text = formatDate(binding.root.context, item.createdAt)
 
             ivAvatar.setOnClickListener {
@@ -78,12 +93,25 @@ class HomeAdapter(private val listener: OnClickListener) : BaseRecyclerView<Layo
                 if (isLiked) {
                     item.totalLike -= 1
                     item.listLike.removeIf { it.username == username.toString() }
-                    ivLike.setImageResource(R.drawable.ic_unlike)
+                    if (isDarkMode) {
+                        ivLike.setImageResource(R.drawable.ic_unlike_dark)
+                    } else {
+                        ivLike.setImageResource(R.drawable.ic_unlike)
+                    }
                 } else {
                     ivHeart.startAnimation(zoomOutAnim)
                     ivHeart.startAnimation(zoomInAnim)
                     item.totalLike += 1
-                    item.listLike.add(AuthorData(username.toString(), name.toString(), avatar.toString(), Gender.MALE, "", ""))
+                    item.listLike.add(
+                        AuthorData(
+                            username.toString(),
+                            name.toString(),
+                            avatar.toString(),
+                            Gender.MALE,
+                            "",
+                            ""
+                        )
+                    )
                     ivLike.setImageResource(R.drawable.ic_liked)
                 }
                 tvLikeCount.text = item.totalLike.toString()

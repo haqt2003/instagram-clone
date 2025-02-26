@@ -5,7 +5,7 @@
     android:id="@+id/cl_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    style="@style/BackgroundColor"
     tools:context=".ui.LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/logo_text"/>
+            style="@style/ImageLogo"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_name"
@@ -34,9 +34,8 @@
             android:layout_marginTop="36dp"
             android:paddingVertical="16dp"
             android:paddingHorizontal="16dp"
-            android:background="@drawable/custom_edittext"
             android:textSize="14sp"
-            android:textColor="@color/black"
+            style="@style/EditText"
             android:hint="@string/name" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -48,9 +47,8 @@
             android:paddingVertical="16dp"
             android:paddingStart="16dp"
             android:paddingEnd="60dp"
-            android:background="@drawable/custom_edittext"
             android:textSize="14sp"
-            android:textColor="@color/black"
+            style="@style/EditText"
             android:hint="@string/username" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -62,10 +60,9 @@
             android:paddingVertical="16dp"
             android:paddingStart="16dp"
             android:paddingEnd="32dp"
-            android:background="@drawable/custom_edittext"
             android:textSize="14sp"
             android:hint="@string/password"
-            android:textColor="@color/black"
+            style="@style/EditText"
             android:inputType="textPassword"/>
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -105,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/already_have_account"
-                android:textColor="@color/black"/>
+                style="@style/TextColorLogin"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_login"

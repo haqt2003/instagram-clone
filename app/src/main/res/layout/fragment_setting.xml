@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    style="@style/BackgroundColor"
     tools:context=".ui.SettingFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/ic_back"/>
+                style="@style/ImageBack"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/setting"
-                android:textColor="@color/black"
+                style="@style/TextColor"
                 android:textSize="18sp"
                 android:fontFamily="@font/inter_bold"/>
 
@@ -52,7 +52,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_header"
             android:layout_marginTop="12dp"
-            android:background="#DBDBDB"/>
+            style="@style/BackgroundColorDivider"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_edit"
@@ -65,7 +65,7 @@
             android:fontFamily="@font/inter_medium"
             android:layout_marginHorizontal="20dp"
             android:text="@string/edit_info"
-            android:textColor="@color/black"
+            style="@style/TextColor"
             android:textSize="16sp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -78,14 +78,27 @@
             android:fontFamily="@font/inter_medium"
             android:layout_marginHorizontal="20dp"
             android:text="@string/language"
-            android:textColor="@color/black"
+            style="@style/TextColor"
+            android:textSize="16sp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tv_language"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingVertical="16dp"
+            android:fontFamily="@font/inter_medium"
+            android:layout_marginHorizontal="20dp"
+            android:text="@string/theme"
+            style="@style/TextColor"
             android:textSize="16sp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tv_language"
+            app:layout_constraintTop_toBottomOf="@+id/tv_theme"
             app:layout_constraintStart_toStartOf="parent"
             android:paddingVertical="16dp"
             android:fontFamily="@font/inter_medium"

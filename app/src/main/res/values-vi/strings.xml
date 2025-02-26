@@ -57,4 +57,9 @@
     <string name="update_success">Cập nhật thành công!</string>
     <string name="add_success">Thêm bài viết thành công!</string>
     <string name="undefined">Không xác định</string>
+    <string name="read_more">xem thêm</string>
+    <string name="read_less">ẩn bớt</string>
+    <string name="theme">Giao diện</string>
+    <string name="light">Sáng</string>
+    <string name="dark">Tối</string>
 </resources>

@@ -3,7 +3,7 @@
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/dialog_background"
+    style="@style/DialogBackground"
     android:clipToOutline="true"
     android:orientation="vertical">
 
@@ -15,7 +15,7 @@
         android:layout_marginHorizontal="28dp"
         android:layout_marginTop="28dp"
         android:textSize="20sp"
-        android:textColor="@color/black"
+        style="@style/TextColor"
         android:layout_gravity="center_horizontal"
         android:fontFamily="@font/inter_bold"
         android:gravity="center"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:text="@string/delete_post_desc"
         android:textSize="16sp"
-        android:textColor="#444444"
+        style="@style/TextColor"
         android:layout_marginHorizontal="28dp"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
@@ -38,14 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="12dp"
-        android:background="#DBDBDB"/>
+        style="@style/BackgroundColorDividerDialog"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"
-        android:background="@drawable/custom_background_dialog">
+        style="@style/DialogBackgroundButton">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_confirm"
@@ -66,14 +66,14 @@
         android:id="@+id/v_divider1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#DBDBDB"/>
+        style="@style/BackgroundColorDividerDialog"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingVertical="16dp"
-        android:background="@drawable/custom_background_dialog">
+        style="@style/DialogBackgroundButton">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_cancel"
@@ -85,7 +85,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/cancel"
             android:textSize="16sp"
-            android:textColor="@color/black"
+            style="@style/TextColor"
             android:fontFamily="@font/inter_medium" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

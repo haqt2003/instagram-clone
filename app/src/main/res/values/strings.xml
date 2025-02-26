@@ -19,7 +19,7 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
-    <string name="not_owner">You are not the owner</string>
+    <string name="not_owner">You are not the owner!</string>
     <string name="at_least_1_img">You must have at least 1 image</string>
     <string name="content_not_empty">Content cannot be empty</string>
     <string name="delete_post">Delete this post?</string>
@@ -58,4 +58,9 @@
     <string name="update_success">Updated successfully!</string>
     <string name="add_success">Post added successfully</string>
     <string name="undefined">Undefined</string>
+    <string name="read_more">more</string>
+    <string name="read_less">hide</string>
+    <string name="theme">Theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
 </resources>

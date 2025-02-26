@@ -2,7 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="text_secondary">#7A7A7C</color>
     <color name="blue_btn">#3897F0</color>
     <color name="blue_btn_pressed">#2B8DE9</color>
     <color name="blue_text">#378ED6</color>
+    <color name="bg_dark">#0C1115</color>
+    <color name="text_dark">#979B9E</color>
+    <color name="bg_bottom">#979B9E</color>
+    <color name="text_secondary_dark">#989DA0</color>
+    <color name="bg_bottom_dark">#242831</color>
 </resources>
