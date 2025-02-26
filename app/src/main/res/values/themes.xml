@@ -17,7 +17,7 @@
     <style name="BackgroundColorDividerWrapper"><item name="android:background">#DBDBDB</item></style>
     <style name="BackgroundBottomColor"><item name="android:background">@color/white</item></style>
     <style name="ImageRoundAvatar"><item name="android:src">@drawable/ic_round</item></style>
-    <style name="BottomSheet"><item name="android:src">@drawable/bottom_sheet</item></style>
+    <style name="BottomSheet"><item name="android:background">@drawable/bottom_sheet</item></style>
     <style name="ImageHome"><item name="android:src">@drawable/ic_home</item></style>
     <style name="ImageHomeActive"><item name="android:src">@drawable/ic_home_active</item></style>
     <style name="ImageAdd"><item name="android:src">@drawable/ic_add</item></style>
@@ -33,4 +33,6 @@
     <style name="WrapperMore"><item name="android:background">@drawable/wrapper_more</item></style>
     <style name="ImageEdit"><item name="android:src">@drawable/ic_edit</item></style>
     <style name="EditText"><item name="android:background">@drawable/custom_edittext</item></style>
+    <style name="ImageSearch"><item name="android:src">@drawable/ic_search</item></style>
+    <style name="EditSearch"><item name="android:background">@drawable/custom_like_search</item></style>
 </resources>

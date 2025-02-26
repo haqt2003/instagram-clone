@@ -68,6 +68,7 @@ class UpdateUserActivity : AppCompatActivity() {
 
         userViewModel.updateMsg.observe(this) {
             Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            finish()
         }
 
         userViewModel.user.observe(this) {
@@ -134,8 +135,6 @@ class UpdateUserActivity : AppCompatActivity() {
                     address,
                     introduce
                 )
-
-                finish()
             }
 
             tvEditAvatar.setOnClickListener {

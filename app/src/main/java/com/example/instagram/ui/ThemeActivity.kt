@@ -11,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.instagram.R
 import com.example.instagram.databinding.ActivityThemeBinding
 import com.example.instagram.utils.changeLanguage
+import java.util.Locale
 
 class ThemeActivity : AppCompatActivity() {
     private val binding: ActivityThemeBinding by lazy {

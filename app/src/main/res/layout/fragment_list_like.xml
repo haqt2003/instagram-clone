@@ -29,7 +29,7 @@
         android:layout_marginTop="28dp"
         android:paddingVertical="6dp"
         android:paddingHorizontal="12dp"
-        android:background="@drawable/custom_like_search">
+        style="@style/EditSearch">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_search"
@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/ic_search"/>
+            style="@style/ImageSearch"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_search"
@@ -50,7 +50,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="8dp"
             android:hint="@string/search"
-            android:textColor="#757881"
             android:maxLines="1"
             android:background="@null" />
 
