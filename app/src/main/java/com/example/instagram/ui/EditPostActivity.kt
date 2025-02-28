@@ -107,7 +107,7 @@ class EditPostActivity : AppCompatActivity(), EditPostAdapter.OnClickListener {
                         postViewModel.msg.observe(this@EditPostActivity) { message ->
                             val intent = Intent(this@EditPostActivity, MainActivity::class.java)
                             if (message == "e_success") {
-                                intent.putExtra("msg", getString(R.string.update_success))
+                                intent.putExtra("msg", getString(R.string.edit_post_success))
                             }
                             startActivity(intent)
                             finish()
