@@ -25,7 +25,7 @@ class LanguageActivity : AppCompatActivity() {
         }
 
         val sharedPreferences = getSharedPreferences("instagram_config", Context.MODE_PRIVATE)
-        val language = sharedPreferences.getString("language", "vi")
+        val language = sharedPreferences.getString("language", "")
         if (language == "en") {
             binding.rbEnglish.isChecked = true
             binding.rbVietnamese.isChecked = false

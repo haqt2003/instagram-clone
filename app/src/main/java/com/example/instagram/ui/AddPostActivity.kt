@@ -72,10 +72,8 @@ class AddPostActivity : AppCompatActivity() {
                     postViewModel.addPost(userId, imageParts, content)
                     postViewModel.msg.observe(this) { message ->
                         val intent = Intent(this, MainActivity::class.java)
-                        if (message == "Thêm bài viết thành công!") {
+                        if (message == "p_success") {
                             intent.putExtra("msg", getString(R.string.add_success))
-                        } else {
-                            intent.putExtra("msg", message)
                         }
                         startActivity(intent)
                         finish()

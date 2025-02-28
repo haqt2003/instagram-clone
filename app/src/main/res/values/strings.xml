@@ -63,4 +63,5 @@
     <string name="theme">Theme</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
+    <string name="register_success">Registered successfully</string>
 </resources>

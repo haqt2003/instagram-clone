@@ -27,14 +27,17 @@ class ThemeActivity : AppCompatActivity() {
             insets
         }
 
+        val sharedPreferences = getSharedPreferences("instagram_config", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
         val isDarkMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
 
         if (!isDarkMode) {
-            binding.rbLight.isChecked = true
-            binding.rbDark.isChecked = false
+            binding.rbLights.isChecked = true
+            binding.rbDarks.isChecked = false
         } else {
-            binding.rbLight.isChecked = false
-            binding.rbDark.isChecked = true
+            binding.rbLights.isChecked = false
+            binding.rbDarks.isChecked = true
         }
 
         with(binding) {
@@ -42,16 +45,20 @@ class ThemeActivity : AppCompatActivity() {
                 finish()
             }
 
-            rbLight.setOnClickListener {
+            rbLights.setOnClickListener {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                rbLight.isChecked = true
-                rbDark.isChecked = false
+                rbLights.isChecked = true
+                rbDarks.isChecked = false
+                editor.putString("theme", "light")
+                editor.apply()
             }
 
-            rbDark.setOnClickListener {
+            rbDarks.setOnClickListener {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                rbLight.isChecked = false
-                rbDark.isChecked = true
+                rbLights.isChecked = false
+                rbDarks.isChecked = true
+                editor.putString("theme", "dark")
+                editor.apply()
             }
         }
     }

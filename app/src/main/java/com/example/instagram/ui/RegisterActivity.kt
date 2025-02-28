@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
 
         authViewModel.authMsg.observe(this) {
             if (it == "Tạo tài khoản thành công!") {
-                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, LoginActivity::class.java)
                 intent.putExtra("username", binding.etUsername.text.toString())
                 intent.putExtra("password", binding.etPassword.text.toString())

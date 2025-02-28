@@ -85,7 +85,7 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
             runCatching {
                 postRepository.addPost(userId, images, content)
             }.onSuccess {
-                _msg.postValue(it.message ?: "Thêm bài viết thành công!")
+                _msg.postValue(it.message ?: "p_success")
             }
         }
     }
@@ -100,7 +100,7 @@ class PostViewModel(private val postRepository: PostRepository) : ViewModel() {
             runCatching {
                 postRepository.editPost(userId, postId, images, content)
             }.onSuccess {
-                _msg.postValue(it.message ?: "Sửa bài viết thành công!")
+                _msg.postValue(it.message ?: "e_success")
             }
         }
     }

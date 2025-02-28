@@ -11,6 +11,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -56,27 +57,22 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val sharedPreferences = getSharedPreferences("instagram", MODE_PRIVATE)
+        val username = sharedPreferences.getString("username", "")
+
+        checkUser()
+        setTheme()
         setLanguage()
 
         if (savedInstanceState == null) {
             replaceFragment(homeFragment)
         }
 
-        val sharedPreferences = getSharedPreferences("instagram", MODE_PRIVATE)
-        val username = sharedPreferences.getString("username", "")
-
-        if (username.isNullOrEmpty()) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            userViewModel.getUser(username)
-        }
-
         val msg = intent.getStringExtra("msg")
         if (!msg.isNullOrEmpty()) {
             postViewModel.getPosts(1)
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+            intent.putExtra("msg", "")
         }
 
         userViewModel.user.observe(this) {
@@ -113,6 +109,7 @@ class MainActivity : AppCompatActivity() {
             ivAdd.setOnClickListener {
                 selectImages()
             }
+
             ivProfile.setOnClickListener {
                 val isDarkMode = (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
                 if (isDarkMode) {
@@ -137,16 +134,52 @@ class MainActivity : AppCompatActivity() {
         pickMultipleMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
+    private fun checkUser() {
+        val sharedPreferences = getSharedPreferences("instagram", MODE_PRIVATE)
+        val username = sharedPreferences.getString("username", "")
+
+        if (username.isNullOrEmpty()) {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            userViewModel.getUser(username)
+        }
+    }
+
     private fun setLanguage() {
         val sharedPreferences = getSharedPreferences("instagram_config", Context.MODE_PRIVATE)
-        val languageCode = sharedPreferences.getString("language", "vi") ?: "vi"
+        val languageCode = sharedPreferences.getString("language", "")
+        val sharedPreferencesEditor = sharedPreferences.edit()
 
-        val locale = Locale(languageCode)
+        val locale = if (languageCode.toString() == "") {
+            Locale.getDefault()
+        } else {
+            Locale(languageCode.toString())
+        }
+
         Locale.setDefault(locale)
 
         val config = resources.configuration
         config.setLocale(locale)
 
         resources.updateConfiguration(config, resources.displayMetrics)
+
+        sharedPreferencesEditor.putString("language", locale.language)
+        sharedPreferencesEditor.apply()
+    }
+
+
+    private fun setTheme() {
+        val sharedPreferencesConfig = getSharedPreferences("instagram_config", Context.MODE_PRIVATE)
+        val theme = sharedPreferencesConfig.getString("theme", "")
+
+        if (theme.toString() == "") {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        } else if (theme == "dark") {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 }

@@ -66,7 +66,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_light"
+                android:id="@+id/rb_lights"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/light"
@@ -75,7 +75,7 @@
                 android:fontFamily="@font/inter_regular" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
-                android:id="@+id/rb_dark"
+                android:id="@+id/rb_darks"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/dark"

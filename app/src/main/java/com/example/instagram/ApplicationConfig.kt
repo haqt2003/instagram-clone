@@ -21,12 +21,17 @@ class ApplicationConfig : Application() {
 
     private fun setAppLanguage() {
         val sharedPreferences = getSharedPreferences("instagram_config", Context.MODE_PRIVATE)
-        val languageCode = sharedPreferences.getString("language", "vi") ?: "vi"
+        val languageCode = sharedPreferences.getString("language", "")
 
-        val locale = Locale(languageCode)
+        val locale = if (languageCode.toString() == "") {
+            Locale.getDefault()
+        } else {
+            Locale(languageCode.toString())
+        }
+
         Locale.setDefault(locale)
 
-        val config = Configuration(resources.configuration)
+        val config = resources.configuration
         config.setLocale(locale)
 
         resources.updateConfiguration(config, resources.displayMetrics)
