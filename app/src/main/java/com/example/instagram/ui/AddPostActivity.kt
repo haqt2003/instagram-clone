@@ -44,7 +44,6 @@ class AddPostActivity : AppCompatActivity() {
         }
         val sharedPreferences = getSharedPreferences("instagram", Context.MODE_PRIVATE)
         val id = sharedPreferences.getString("id", "")
-        val username = sharedPreferences.getString("username", "")
 
         val uris = intent.getStringArrayListExtra("uris")
         adapter = AddPostAdapter()
